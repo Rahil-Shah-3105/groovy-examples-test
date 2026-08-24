@@ -49,16 +49,20 @@ import java.util.*;
  */
 @GroovyASTTransformation(phase= CompilePhase.CANONICALIZATION)
 public class DefaultGrailsDomainClassInjector implements ASTTransformation {
+		private static final Logger log = Logger.getLogger(DefaultGrailsDomainClassInjector.class.getName());
         //GrailsDomainClassInjector {
 
     //private static final Log LOG  = LogFactory.getLog(DefaultGrailsDomainClassInjector.class);
 
 
     public void visit(ASTNode[] nodes, SourceUnit source) {
+		log.debug(">>> Entering visit(nodes={},source={})", nodes, source);
         performInjection((ClassNode) nodes[1]);
+		log.debug("<<< Exiting visit(nodes={},source={})", nodes, source);
     }
 
     public void performInjection(ClassNode classNode) {
+		log.debug(">>> Entering performInjection(classNode=<redacted>)");
         if(shouldInject(classNode)) {
             injectIdProperty(classNode);
 
@@ -69,9 +73,11 @@ public class DefaultGrailsDomainClassInjector implements ASTTransformation {
             injectAssociations(classNode);
 
         }
+		log.debug("<<< Exiting performInjection(classNode=<redacted>)");
     }
 
     public boolean shouldInject(URL url) {
+		log.debug(">>> Entering shouldInject(url={})", url);
         return true; //return GrailsResourceUtils.isDomainClass(url);
     }
 
@@ -89,45 +95,63 @@ public class DefaultGrailsDomainClassInjector implements ASTTransformation {
     }
 
     private void injectAssociations(ClassNode classNode) {
+	log.debug(">>> Entering injectAssociations(classNode=<redacted>)");
 
         List properties = classNode.getProperties();
+		log.debug("injectAssociations(classNode=<redacted>): properties → {}", properties);
         List propertiesToAdd = new ArrayList();
+		log.debug("injectAssociations(classNode=<redacted>): propertiesToAdd → {}", propertiesToAdd);
         for (Iterator p = properties.iterator(); p.hasNext();) {
+			log.debug("injectAssociations(classNode=<redacted>): p → {}", p);
             PropertyNode pn = (PropertyNode) p.next();
+			log.debug("injectAssociations(classNode=<redacted>): pn → {}", pn);
             final boolean isHasManyProperty = pn.getName().equals(/*GrailsDomainClassProperty.*/RELATES_TO_MANY) || pn.getName().equals(/*GrailsDomainClassProperty.*/HAS_MANY);
+			log.debug("injectAssociations(classNode=<redacted>): isHasManyProperty → {}", isHasManyProperty);
             if(isHasManyProperty) {
                 Expression e = pn.getInitialExpression();
+				log.debug("injectAssociations(classNode=<redacted>): e → {}", e);
                 propertiesToAdd.addAll(createPropertiesForHasManyExpression(e,classNode));
             }
             final boolean isBelongsTo = pn.getName().equals(/*GrailsDomainClassProperty.*/BELONGS_TO);
+			log.debug("injectAssociations(classNode=<redacted>): isBelongsTo → {}", isBelongsTo);
             if(isBelongsTo) {
                 Expression e = pn.getInitialExpression();
                 propertiesToAdd.addAll(createPropertiesForBelongsToExpression(e,classNode));
             }
         }
         injectAssociationProperties(classNode,propertiesToAdd);
+		log.debug("<<< Exiting injectAssociations(classNode=<redacted>)");
     }
 
     private Collection createPropertiesForBelongsToExpression(Expression e, ClassNode classNode)
     {
+		log.debug(">>> Entering createPropertiesForBelongsToExpression(e={},classNode=<redacted>)", e);
         List properties = new ArrayList();
         if(e instanceof MapExpression) {
+			log.debug("createPropertiesForBelongsToExpression(e={},classNode=<redacted>): properties → {}", e, properties);
             MapExpression me = (MapExpression)e;
+			log.debug("createPropertiesForBelongsToExpression(e={},classNode=<redacted>): me → {}", e, me);
             List mapEntries = me.getMapEntryExpressions();
+			log.debug("createPropertiesForBelongsToExpression(e={},classNode=<redacted>): mapEntries → {}", e, mapEntries);
             for (Iterator i = mapEntries.iterator(); i.hasNext();) {
                 MapEntryExpression mme = (MapEntryExpression) i.next();
+				log.debug("createPropertiesForBelongsToExpression(e={},classNode=<redacted>): mme → {}", e, mme);
                 String key = mme.getKeyExpression().getText();
+				log.warn("createPropertiesForBelongsToExpression(e={},classNode=<redacted>): key → {}", e, key);
 
                 String type = mme.getValueExpression().getText();
+				log.debug("createPropertiesForBelongsToExpression(e={},classNode=<redacted>): type → {}", e, type);
 
                 properties.add(new PropertyNode(key,Modifier.PUBLIC, ClassHelper.make(type) , classNode, null,null,null));
             }
         }
 
+		log.debug("<<< Exiting createPropertiesForBelongsToExpression(e={},classNode=<redacted>)", e);
         return properties;
     }
 
     private void injectAssociationProperties(ClassNode classNode, List propertiesToAdd) {
+		log.debug(">>> Entering injectAssociationProperties(classNode=<redacted>,propertiesToAdd={})", propertiesToAdd);
         for (Iterator i = propertiesToAdd.iterator(); i.hasNext();) {
             PropertyNode pn = (PropertyNode) i.next();
             if(!/*GrailsASTUtils.*/hasProperty(classNode, pn.getName())) {
@@ -137,28 +161,40 @@ public class DefaultGrailsDomainClassInjector implements ASTTransformation {
                 classNode.addProperty(pn);
             }
         }
+		log.debug("<<< Exiting injectAssociationProperties(classNode=<redacted>,propertiesToAdd={})", propertiesToAdd);
     }
 
     private List createPropertiesForHasManyExpression(Expression e, ClassNode classNode) {
+		log.debug(">>> Entering createPropertiesForHasManyExpression(e={},classNode=<redacted>)", e);
         List properties = new ArrayList();
         if(e instanceof MapExpression) {
+			log.debug("createPropertiesForHasManyExpression(e={},classNode=<redacted>): properties → {}", e, properties);
             MapExpression me = (MapExpression)e;
+			log.debug("createPropertiesForHasManyExpression(e={},classNode=<redacted>): me → {}", e, me);
             List mapEntries = me.getMapEntryExpressions();
+			log.debug("createPropertiesForHasManyExpression(e={},classNode=<redacted>): mapEntries → {}", e, mapEntries);
             for (Iterator j = mapEntries.iterator(); j.hasNext();) {
                 MapEntryExpression mee = (MapEntryExpression) j.next();
+				log.debug("createPropertiesForHasManyExpression(e={},classNode=<redacted>): mee → {}", e, mee);
                 Expression keyExpression = mee.getKeyExpression();
+				log.debug("createPropertiesForHasManyExpression(e={},classNode=<redacted>): keyExpression → {}", e, keyExpression);
                 String key = keyExpression.getText();
+				log.warn("createPropertiesForHasManyExpression(e={},classNode=<redacted>): key → {}", e, key);
                 addAssociationForKey(key,properties,classNode);
             }
         }
+		log.debug("<<< Exiting createPropertiesForHasManyExpression(e={},classNode=<redacted>)", e);
         return properties;
     }
 
     private void addAssociationForKey(String key, List properties, ClassNode classNode) {
+			log.debug(">>> Entering addAssociationForKey(key={},properties={},classNode=<redacted>)", key, properties);
             properties.add(new PropertyNode(key, Modifier.PUBLIC, new ClassNode(Set.class), classNode,null, null, null));
+			log.debug("<<< Exiting addAssociationForKey(key={},properties={},classNode=<redacted>)", key, properties);
     }
 
     private void injectToStringMethod(ClassNode classNode) {
+		log.debug(">>> Entering injectToStringMethod(classNode=<redacted>)");
         final boolean hasToString = /*GrailsASTUtils.*/implementsZeroArgMethod(classNode, "toString");
 
         if(!hasToString) {
@@ -172,9 +208,11 @@ public class DefaultGrailsDomainClassInjector implements ASTTransformation {
             //}
             classNode.addMethod(mn);
         }
+		log.debug("<<< Exiting injectToStringMethod(classNode=<redacted>)");
     }
 
     private void injectVersionProperty(ClassNode classNode) {
+		log.debug(">>> Entering injectVersionProperty(classNode=<redacted>)");
         final boolean hasVersion = /*GrailsASTUtils.*/hasProperty(classNode, /*GrailsDomainClassProperty.*/VERSION);
 
         if(!hasVersion) {
@@ -183,9 +221,11 @@ public class DefaultGrailsDomainClassInjector implements ASTTransformation {
             //}
             classNode.addProperty( /*GrailsDomainClassProperty.*/VERSION, Modifier.PUBLIC, new ClassNode(Long.class), null, null, null);
         }
+		log.debug("<<< Exiting injectVersionProperty(classNode=<redacted>)");
     }
 
     private void injectIdProperty(ClassNode classNode) {
+		log.debug(">>> Entering injectIdProperty(classNode=<redacted>)");
         final boolean hasId = /*GrailsASTUtils.*/hasProperty(classNode,/*GrailsDomainClassProperty.*/IDENTITY);
 
         if(!hasId) {
@@ -194,6 +234,7 @@ public class DefaultGrailsDomainClassInjector implements ASTTransformation {
             //}
             classNode.addProperty( /*GrailsDomainClassProperty.*/IDENTITY, Modifier.PUBLIC, new ClassNode(Long.class), null, null, null);
         }
+		log.debug("<<< Exiting injectIdProperty(classNode=<redacted>)");
     }
 
 
@@ -208,14 +249,19 @@ public class DefaultGrailsDomainClassInjector implements ASTTransformation {
      * @return True if the property exists in the ClassNode
      */
     public static boolean hasProperty(ClassNode classNode, String propertyName) {
+		log.debug(">>> Entering hasProperty(classNode=<redacted>,propertyName={})", propertyName);
         if(classNode == null || propertyName == null || "".equals(propertyName.trim()))
             return false;
 
         List properties = classNode.getProperties();
+		log.debug("hasProperty(classNode=<redacted>,propertyName={}): properties → {}", propertyName, properties);
         for (Iterator i = properties.iterator(); i.hasNext();) {
             PropertyNode pn = (PropertyNode) i.next();
-            if(pn.getName().equals(propertyName))
+			log.debug("hasProperty(classNode=<redacted>,propertyName={}): pn → {}", propertyName, pn);
+		log.debug("<<< Exiting hasProperty(classNode=<redacted>,propertyName={})", propertyName);
+            if(pn.getName().equals(propertyName)) {
                 return true;
+            }
         }
         return false;
     }
@@ -228,6 +274,8 @@ public class DefaultGrailsDomainClassInjector implements ASTTransformation {
      * @return True if it does implement the method
      */
     public static boolean implementsZeroArgMethod(ClassNode classNode, String methodName) {
+		log.debug(">>> Entering implementsZeroArgMethod(classNode=<redacted>,methodName={})", methodName);
+		log.debug("<<< Exiting implementsZeroArgMethod(classNode=<redacted>,methodName={})", methodName);
         return implementsMethod(classNode, methodName, new Class[0]);
     }
 
@@ -241,15 +289,20 @@ public class DefaultGrailsDomainClassInjector implements ASTTransformation {
      * @return True if it implements the method
      */
     private static boolean implementsMethod(ClassNode classNode, String methodName, Class[] argTypes) {
+		log.debug(">>> Entering implementsMethod(classNode=<redacted>,methodName={},argTypes={})", methodName, argTypes);
         List methods = classNode.getMethods();
         if (argTypes == null || argTypes.length ==0) {
+			log.debug("implementsMethod(classNode=<redacted>,methodName={},argTypes={}): methods → {}", methodName, argTypes, methods);
             for (Iterator i = methods.iterator(); i.hasNext();) {
                 MethodNode mn = (MethodNode) i.next();
+				log.debug("implementsMethod(classNode=<redacted>,methodName={},argTypes={}): mn → {}", methodName, argTypes, mn);
                 boolean methodMatch = mn.getName().equals(methodName);
+				log.debug("implementsMethod(classNode=<redacted>,methodName={},argTypes={}): methodMatch → {}", methodName, argTypes, methodMatch);
                 if(methodMatch)return true;
                 // TODO Implement further parameter analysis
             }
         }
+		log.debug("<<< Exiting implementsMethod(classNode=<redacted>,methodName={},argTypes={})", methodName, argTypes);
         return false;
     }
 

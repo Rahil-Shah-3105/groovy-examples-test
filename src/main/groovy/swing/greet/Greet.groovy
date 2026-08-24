@@ -43,13 +43,16 @@ class Greet {
     @Bindable def statuses = []
 
     void startUp() {
+		println("[DEBUG] >>> Entering startUp()")
         setAllowSelection(false)
         setAllowTweet(false)
         view.greetFrame.show()
         view.loginDialog.show()
+		println("[DEBUG] <<< Exiting startUp()")
     }
 
     void login(evt) {
+		println("[DEBUG] >>> Entering login(evt=${evt})")
         setAllowLogin(false)
         view.doOutside {
             try {
@@ -73,9 +76,11 @@ class Greet {
                 }
             }
         }
+		println("[DEBUG] <<< Exiting login(evt=${evt})")
     }
 
     void filterTweets(evt = null) {
+		println("[DEBUG] >>> Entering filterTweets(evt=${evt})")
         setAllowSelection(false)
         setAllowTweet(false)
         view.doOutside {
@@ -98,15 +103,19 @@ class Greet {
                 }
             }
         }
+		println("[DEBUG] <<< Exiting filterTweets(evt=${evt})")
     }
 
     def userSelected(evt) {
+		println("[DEBUG] >>> Entering userSelected(evt=${evt})")
         view.doOutside {
             selectUser(view.users.selectedItem)
         }
+		println("[DEBUG] <<< Exiting userSelected(evt=${evt})")
     }
 
     def selectUser(user) {
+		println("[DEBUG] >>> Entering selectUser(user=${user})")
         setAllowSelection(false)
         setAllowTweet(false)
         try {
@@ -119,9 +128,11 @@ class Greet {
                 setAllowTweet(true)
             }
         }
+		println("[DEBUG] <<< Exiting selectUser(user=${user})")
     }
 
     def tweet(evt = null) {
+		println("[DEBUG] >>> Entering tweet(evt=${evt})")
         setAllowTweet(false)
         view.doOutside {
             try {
@@ -133,21 +144,28 @@ class Greet {
                 setAllowTweet(true)
             }
         }
+		println("[DEBUG] <<< Exiting tweet(evt=${evt})")
     }
 
     public static void main(String[] args) {
+		println("[DEBUG] >>> Entering main(args=${args})")
         def model = new TwitterAPI()
         def controller = new Greet()
         def view = new SwingBuilder()
 
         controller.api = model
+		println("[DEBUG] main(args=${args}): controller.api → ${controller.api}")
+		println("[DEBUG] main(args=${args}): controller.view → ${controller.view}")
         controller.view = view
 
         view.controller = controller
+		println("[DEBUG] main(args=${args}): view.controller → ${view.controller}")
 
         view.build(View)
         view.view = view
+		println("[DEBUG] main(args=${args}): view.view → ${view.view}")
 
         controller.startUp()
+		println("[DEBUG] <<< Exiting main(args=${args})")
     }
 }

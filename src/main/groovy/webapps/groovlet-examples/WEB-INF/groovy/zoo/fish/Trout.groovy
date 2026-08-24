@@ -21,6 +21,7 @@ package zoo.fish
 class Trout extends zoo.Fish {
 
   String saySomething(String something) {
+	println("[DEBUG] >>> Entering saySomething(something=${something})")
     return "Trout says " + something + "...blubb�!"
   }
 

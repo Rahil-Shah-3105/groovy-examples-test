@@ -51,7 +51,9 @@ def end = new Date().time
 println "Indexing $numIndexed files took ${end - start} milliseconds"
 
 def index(indexDir, dataDir) {
+	println("[DEBUG] >>> Entering index(indexDir=${indexDir},dataDir=${dataDir})")
     if (!dataDir.exists() || !dataDir.directory) {
+		println("[WARN] Throwing IOException from index(indexDir=${indexDir},dataDir=${dataDir})")
         throw new IOException("$dataDir does not exist or is not a directory")
     }
     def config = new IndexWriterConfig(Version.LUCENE_43, new StandardAnalyzer(Version.LUCENE_43))
@@ -64,10 +66,12 @@ def index(indexDir, dataDir) {
     }
     def numIndexed = writer.numDocs()
     writer.close() // Close index
+	println("[DEBUG] <<< Exiting index(indexDir=${indexDir},dataDir=${dataDir})")
     return numIndexed
 }
 
 void indexFile(writer, f) {
+	println("[DEBUG] >>> Entering indexFile(writer=${writer},f=${f})")
     if (f.hidden || !f.exists() || !f.canRead() || f.directory) { return }
 
     println "Indexing $f.canonicalPath"
@@ -80,4 +84,5 @@ void indexFile(writer, f) {
     doc.add(new StringField("filename",f.canonicalPath, YES))
 
     writer.addDocument(doc) // Add document to Lucene index
+	println("[DEBUG] <<< Exiting indexFile(writer=${writer},f=${f})")
 }

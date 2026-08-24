@@ -19,15 +19,19 @@
 public class ListFilesManualTest { 
 
     static void main(args) {
+		println("[DEBUG] >>> Entering main(args=${args})")
         println("Called main with ${args}")
         listFiles(Arrays.asList(args))
+		println("[DEBUG] <<< Exiting main(args=${args})")
     }
     
     static String getPath(file) {
+		println("[DEBUG] >>> Entering getPath(file=${file})")
         return file.absolutePath
     }
 
     static void listFiles(dirs) {
+		println("[DEBUG] >>> Entering listFiles(dirs=${dirs})")
         println("called with ${dirs}")
         
         for(dir in dirs) {
@@ -39,5 +43,6 @@ public class ListFilesManualTest {
                 println(getPath(f))
             } 
         }
+		println("[DEBUG] <<< Exiting listFiles(dirs=${dirs})")
     }
 }

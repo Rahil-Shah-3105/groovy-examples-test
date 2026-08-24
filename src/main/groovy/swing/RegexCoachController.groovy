@@ -50,20 +50,31 @@ class RegexHighliter extends KeyAdapter implements ActionListener {
 
     // react to user actions
     public void actionPerformed(ActionEvent event) {
+		println("[DEBUG] >>> Entering actionPerformed(event=${event})")
         if (event.actionCommand == '<<-') {scanIndex = Math.max(scanIndex - 1, 0)}
         if (event.actionCommand == '->>') {scanIndex++}
         doHighlights()
+		println("[DEBUG] <<< Exiting actionPerformed(event=${event})")
     }
     public void keyReleased(KeyEvent event) {
+		println("[DEBUG] >>> Entering keyReleased(event=${event})")
+		println("[DEBUG] keyReleased(event=${event}): scanIndex → ${scanIndex}")
         scanIndex = 0
+		println("[DEBUG] <<< Exiting keyReleased(event=${event})")
         doHighlights()
     }
 
     private resetView() {
+		println("[DEBUG] >>> Entering resetView()")
         swing.regexPane.highlighter.removeAllHighlights()
         swing.targetPane.highlighter.removeAllHighlights()
         swing.regexStatus.text = ' '
         swing.targetStatus.text = ' '
+		println("[DEBUG] <<< Exiting resetView()")
+		println("[DEBUG] >>> Entering doHighlights()")
+		println("[DEBUG] doHighlights(): scanIndex → ${scanIndex}")
+		println("[ERROR] Exception in doHighlights(): ${e.message}")
+		println("[DEBUG] <<< Exiting doHighlights()")
     }
 
     // the main regex logic

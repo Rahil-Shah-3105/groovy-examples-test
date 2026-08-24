@@ -33,6 +33,7 @@ import org.codehaus.groovy.osgi.GroovyGreeter
 public class HarnessActivator implements BundleActivator {
 
     public void start(BundleContext context) {
+		println("[DEBUG] >>> Entering start(context=${context})")
         String serviceName = GroovyGreeter.class.getName()
         ServiceReference[] references = context.getAllServiceReferences(serviceName, null)
 
@@ -43,8 +44,10 @@ public class HarnessActivator implements BundleActivator {
             GroovyGreeter service = (GroovyGreeter) serviceHandle
             service.sayHello()
         }
+		println("[DEBUG] <<< Exiting start(context=${context})")
     }
 
     public void stop(BundleContext context) {
+	println("[DEBUG] >>> Entering stop(context=${context})")
     }
 }

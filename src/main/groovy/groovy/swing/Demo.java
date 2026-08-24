@@ -32,24 +32,35 @@ import java.security.PrivilegedAction;
  * @author <a href="mailto:james@coredevelopers.net">James Strachan</a>
  */
 public class Demo extends GroovyTestCase {
+	private static final Logger log = Logger.getLogger(Demo.class.getName());
     ClassLoader parentLoader = getClass().getClassLoader();
     protected GroovyClassLoader loader =
         (GroovyClassLoader) AccessController.doPrivileged(new PrivilegedAction() {
             public Object run() {
+				log.debug(">>> Entering run()");
+				log.debug("<<< Exiting run()");
                 return new GroovyClassLoader(parentLoader);
             }
         });
 
     public static void main(String[] args) throws Exception {
+		log.debug(">>> Entering main(args={})", args);
         Demo demo = new Demo();
+		log.debug("main(args={}): demo → {}", args, demo);
         GroovyObject object = demo.compile("src/examples/groovy/swing/SwingDemo.groovy");
+		log.debug("main(args={}): object → {}", args, object);
         object.invokeMethod("run", null);
+		log.debug("<<< Exiting main(args={})", args);
     }
 
     protected GroovyObject compile(String fileName) throws Exception {
+		log.debug(">>> Entering compile(fileName={})", fileName);
         Class groovyClass = loader.parseClass(new GroovyCodeSource(new File(fileName)));
         GroovyObject object = (GroovyObject) groovyClass.newInstance();
+		log.debug("compile(fileName={}): object → {}", fileName, object);
+		log.debug("compile(fileName={}): groovyClass → {}", fileName, groovyClass);
         assertTrue(object != null);
+		log.debug("<<< Exiting compile(fileName={})", fileName);
         return object;
     }
 }

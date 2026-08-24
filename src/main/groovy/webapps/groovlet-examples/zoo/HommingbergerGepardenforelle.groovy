@@ -21,6 +21,7 @@ package zoo
 class HommingbergerGepardenforelle extends zoo.fish.Trout {
 
   String saySomething(String something) {
+	println("[DEBUG] >>> Entering saySomething(something=${something})")
     return something;
   }
   
