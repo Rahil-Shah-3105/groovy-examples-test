@@ -27,21 +27,28 @@ class BlacklistingShellTest extends GroovyTestCase {
     private BlacklistingShell shell
 
     void setUp() {
+		println("[DEBUG] >>> Entering setUp()")
+		println("[DEBUG] setUp(): shell → ${shell}")
         shell = new BlacklistingShell()
     }
 
     Object evaluate(String text) {
+		println("[DEBUG] >>> Entering evaluate(text=${text})")
         shell.evaluate(text)
+		println("[DEBUG] <<< Exiting evaluate(text=${text})")
     }
 
     void testEvaluate_SuccessfulPaths() {
+		println("[DEBUG] >>> Entering testEvaluate_SuccessfulPaths()")
         assert 6 == evaluate("++(5)")
         assert 0 == evaluate("5 < 4 ? 1 : 0")
         assert 0 == evaluate("5 != 4 ? 0 : 1")
         assert 0 == evaluate("5 < 4 ?: 0 ")
+		println("[DEBUG] <<< Exiting testEvaluate_SuccessfulPaths()")
     }
 
     void testEvaluate_Failures() {
+		println("[DEBUG] >>> Entering testEvaluate_Failures()")
         shouldFail(SecurityException) {
             evaluate('def c = System.class; c.forName("java.lang.System").exit(0)')
         }
@@ -69,6 +76,7 @@ class BlacklistingShellTest extends GroovyTestCase {
         shouldFail(SecurityException) {
             evaluate('def sh = new GroovyShell(); sh.evaluate("System.exit(0)")')
         }
+			println("[DEBUG] testEvaluate_Failures(): sh → ${sh}")
         shouldFail(SecurityException) {
             evaluate('Eval.me("System.exit(0)")')
         }
@@ -78,5 +86,6 @@ class BlacklistingShellTest extends GroovyTestCase {
         shouldFail(SecurityException) {
             evaluate('Script t = this; t.evaluate("System.exit(0)")')
         }
+		println("[DEBUG] <<< Exiting testEvaluate_Failures()")
     }
 }

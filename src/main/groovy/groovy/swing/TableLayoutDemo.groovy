@@ -31,9 +31,13 @@ class TableLayoutDemo {
     def swing
     
     void run() {
+		println("[DEBUG] >>> Entering run()")
+		println("[DEBUG] run(): frame → ${frame}")
+		println("[DEBUG] run(): swing → ${swing}")
         swing = new SwingBuilder()
         
         frame = swing.frame(title:'TableLayout Demo', location:[200,200], size:[300,200]) {
+			println("[DEBUG] <<< Exiting run()")
             menuBar {
                 menu(text:'Help') {
                     menuItem() {
@@ -69,8 +73,10 @@ class TableLayoutDemo {
     }
     
     void showAbout() {
+		println("[DEBUG] >>> Entering showAbout()")
          def pane = swing.optionPane(message:'This demo shows how you can use HTML style table layouts with Swing components')
          def dialog = pane.createDialog(frame, 'About TableLayout Demo')
          dialog.show()
+		println("[DEBUG] <<< Exiting showAbout()")
     }
 }

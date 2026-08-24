@@ -60,14 +60,20 @@ class ArithmeticShell {
      *       if the script returns something other than a number
      */
     Number evaluate(String text) {
+		println("[DEBUG] >>> Entering evaluate(text=${text})")
         try {
             final ImportCustomizer imports = new ImportCustomizer().addStaticStars('java.lang.Math') // add static import of java.lang.Math
             final SecureASTCustomizer secure = new SecureASTCustomizer()
             secure.with {
                 closuresAllowed = false
+				println("[DEBUG] evaluate(text=${text}): closuresAllowed → ${closuresAllowed}")
+				println("[DEBUG] evaluate(text=${text}): methodDefinitionAllowed → ${methodDefinitionAllowed}")
                 methodDefinitionAllowed = false
                 
                 importsWhitelist = []
+				println("[DEBUG] evaluate(text=${text}): importsWhitelist → ${importsWhitelist}")
+				println("[DEBUG] evaluate(text=${text}): staticImportsWhitelist → ${staticImportsWhitelist}")
+				println("[DEBUG] evaluate(text=${text}): staticStarImportsWhitelist → ${staticStarImportsWhitelist}")
                 staticImportsWhitelist = []
                 staticStarImportsWhitelist = ['java.lang.Math'] // only java.lang.Math is allowed
 
@@ -88,6 +94,7 @@ class ArithmeticShell {
                         COMPARE_GREATER_THAN_EQUAL,
                 ].asImmutable()
 
+				println("[DEBUG] evaluate(text=${text}): tokensWhitelist → <redacted>")
                 constantTypesClassesWhiteList = [
                         Integer,
                         Float,
@@ -100,6 +107,7 @@ class ArithmeticShell {
                         Double.TYPE
                 ].asImmutable()
 
+				println("[DEBUG] evaluate(text=${text}): constantTypesClassesWhiteList → ${constantTypesClassesWhiteList}")
                 receiversClassesWhiteList = [
                         Math,
                         Integer,
@@ -109,11 +117,13 @@ class ArithmeticShell {
                         BigDecimal
                 ].asImmutable()
 
+				println("[DEBUG] evaluate(text=${text}): receiversClassesWhiteList → ${receiversClassesWhiteList}")
                 statementsWhitelist = [
                         BlockStatement,
                         ExpressionStatement
                 ].asImmutable()
 
+				println("[DEBUG] evaluate(text=${text}): statementsWhitelist → ${statementsWhitelist}")
                 expressionsWhitelist = [
                         BinaryExpression,
                         ConstantExpression,
@@ -133,14 +143,17 @@ class ArithmeticShell {
                   ClassExpression
                 ].asImmutable()
 
+				println("[DEBUG] evaluate(text=${text}): expressionsWhitelist → ${expressionsWhitelist}")
             }
             CompilerConfiguration config = new CompilerConfiguration()
             config.addCompilationCustomizers(imports, secure)
             GroovyClassLoader loader = new GroovyClassLoader(this.class.classLoader, config)
             Class clazz = loader.parseClass(text)
             Script script = (Script) clazz.newInstance();
+			println("[DEBUG] evaluate(text=${text}): script → ${script}")
             Object result = script.run()
             if (!(result instanceof Number)) throw new IllegalStateException("Script returned a non-number: $result");
+			println("[DEBUG] <<< Exiting evaluate(text=${text})")
             return (Number) result
         } catch (SecurityException ex) {
             throw new SecurityException("Could not evaluate script: $text", ex)

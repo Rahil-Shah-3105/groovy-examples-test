@@ -55,6 +55,7 @@ if (line.size() == 0) {
 // ------------------------
 
 def processRequest() {
+	println("[DEBUG] >>> Entering processRequest()")
     if (content.indexOf("..") < 0) { //simplistic security
         // simple file browser rooted from current dir
         f = new File("." + content)
@@ -64,6 +65,7 @@ def processRequest() {
             extension = content.substring(content.lastIndexOf(".") + 1)
             printHeaders(mimeTypes.get(extension,"text/plain"))          
                       
+			println("[DEBUG] processRequest(): extension → ${extension}")
             if (binaryTypes.contains(extension)) {
                 socket.outputStream.write(f.readBytes())
             } else {
@@ -71,9 +73,11 @@ def processRequest() {
             }
         }
     }
+	println("[DEBUG] <<< Exiting processRequest()")
 }
 
 def printDirectoryListing(f) {
+	println("[DEBUG] >>> Entering printDirectoryListing(f=${f})")
     printHeaders("text/html")          
     println "<html><head></head><body>"
     for (i in f.list().toList().sort()) {
@@ -81,10 +85,13 @@ def printDirectoryListing(f) {
         println "<a href='${content}/${i}'>${i}</a><br>"
     }
     println "</body></html>"
+	println("[DEBUG] <<< Exiting printDirectoryListing(f=${f})")
 }
 
 def printHeaders(mimeType) {
+	println("[DEBUG] >>> Entering printHeaders(mimeType=${mimeType})")
     println "HTTP/1.0 200 OK"
     println "Content-Type: ${mimeType}"
     println ""          
+	println("[DEBUG] <<< Exiting printHeaders(mimeType=${mimeType})")
 }

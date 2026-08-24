@@ -32,6 +32,7 @@ import org.codehaus.groovy.control.CompilePhase
 class MainIntegrationTest extends GroovyTestCase {
 
      public void testInvokeUnitTest() {
+		println("[DEBUG] >>> Entering testInvokeUnitTest()")
         def invoker = new TransformTestHelper(new MainTransformation(), CompilePhase.CANONICALIZATION)
 
         def file = new File('./MainExample.groovy')
@@ -40,5 +41,6 @@ class MainIntegrationTest extends GroovyTestCase {
         def clazz = invoker.parse(file)
         def tester = clazz.newInstance()
         tester.main(null)       // main method added with AST transform
+		println("[DEBUG] <<< Exiting testInvokeUnitTest()")
     }
 }

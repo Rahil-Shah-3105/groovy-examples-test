@@ -59,6 +59,7 @@ class BlacklistingShell {
      *       if the script returns something other than a number
      */
     def evaluate(String text) {
+		println("[DEBUG] >>> Entering evaluate(text=${text})")
         try {
             final SecureASTCustomizer secure = new SecureASTCustomizer()
             secure.with {
@@ -71,25 +72,33 @@ class BlacklistingShell {
                     System,
                 ].asImmutable()
                 
+				println("[DEBUG] evaluate(text=${text}): receiversClassesBlackList → ${receiversClassesBlackList}")
                 expressionsBlacklist = [MethodPointerExpression].asImmutable()
                 
+				println("[DEBUG] evaluate(text=${text}): expressionsBlacklist → ${expressionsBlacklist}")
             }
             CompilerConfiguration config = new CompilerConfiguration()
             config.addCompilationCustomizers(secure)
             GroovyClassLoader loader = new GroovyClassLoader(this.class.classLoader, config)
             Class clazz = loader.parseClass(text)
             Script script = (Script) clazz.newInstance();
+			println("[DEBUG] evaluate(text=${text}): script → ${script}")
             Object result = script.run()
             return result
         } catch (SecurityException ex) {
+			println("[ERROR] Exception in evaluate(text=${text}): ${ex.getMessage()}")
             throw new SecurityException("Could not evaluate script: $text", ex)
         } catch (MultipleCompilationErrorsException mce) {
+			println("[ERROR] Exception in evaluate(text=${text}): ${mce.getMessage()}")
             //this allows compilation errors to be seen by the user       
             mce.errorCollector.errors.each {
                 if (it instanceof ExceptionMessage && it.cause instanceof SecurityException) {
+					println("[WARN] Throwing cause from evaluate(text=${text})")
                     throw it.cause
                 }
             }
+			println("[WARN] Throwing mce from evaluate(text=${text})")
+		println("[DEBUG] <<< Exiting evaluate(text=${text})")
             throw mce
         }
     }            

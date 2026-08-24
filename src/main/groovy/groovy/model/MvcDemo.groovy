@@ -28,9 +28,12 @@ class MvcDemo {
     def swing
     
     void run() {
+		println("[DEBUG] >>> Entering run()")
         swing = new SwingBuilder()
         
+		println("[DEBUG] run(): swing → ${swing}")
         def frame = swing.frame(title:'MVC Demo', location:[200,200], size:[300,200]) {
+			println("[DEBUG] <<< Exiting run()")
             menuBar {
                 menu(text:'Help') {
                     menuItem() {
@@ -54,8 +57,12 @@ class MvcDemo {
     }
  
     void showAbout() {
+		println("[DEBUG] >>> Entering showAbout()")
+		long __logStart = System.currentTimeMillis()
          def pane = swing.optionPane(message:'This demo shows how you can create UI models from simple MVC models')
          def dialog = pane.createDialog(frame, 'About MVC Demo')
+		println("[DEBUG] <<< Exiting showAbout()")
+		println("[INFO] showAbout(): database query executed in ${System.currentTimeMillis() - __logStart} ms")
          dialog.show()
     }
 }

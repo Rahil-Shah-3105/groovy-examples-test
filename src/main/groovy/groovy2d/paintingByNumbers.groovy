@@ -33,20 +33,26 @@ while (true) {
 
 // random integer
 def rnd(upperBound){
+	println("[DEBUG] >>> Entering rnd(upperBound=${upperBound})")
     (int)(Math.random() * upperBound)
+	println("[DEBUG] <<< Exiting rnd(upperBound=${upperBound})")
 }
 
 // draw a random coloured square within bounds
 def drawBlock(w, h, b, g) {
+	println("[DEBUG] >>> Entering drawBlock(w=${w},h=${h},b=${b},g=${g})")
     def row    = rnd(h / b)
     def column = rnd(w / b)
     def colour = new java.awt.Color(rnd(255),rnd(255),rnd(255))
     g.color = colour
+	println("[DEBUG] drawBlock(w=${w},h=${h},b=${b},g=${g}): g.color → ${g.color}")
     g.fillRect(column * b, row * b, b, b)
+	println("[DEBUG] <<< Exiting drawBlock(w=${w},h=${h},b=${b},g=${g})")
 }
 
 // create a new frame and clear screen
 def createGraphics(w, h) {
+	println("[DEBUG] >>> Entering createGraphics(w=${w},h=${h})")
     def frame = new SwingBuilder().frame(
         title:'Painting by numbers',
         location:[20,20],
@@ -60,7 +66,9 @@ def createGraphics(w, h) {
               
     // clear screen
     gfx.color = java.awt.Color.BLACK
+	println("[DEBUG] createGraphics(w=${w},h=${h}): gfx.color → ${gfx.color}")
     gfx.fillRect(0, 0, w, h)
 
+	println("[DEBUG] <<< Exiting createGraphics(w=${w},h=${h})")
     return gfx
 }

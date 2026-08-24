@@ -23,6 +23,7 @@ import zoo.Fish
 class Shark extends Fish {
 
   String saySomething(String something) {
+	println("[DEBUG] >>> Entering saySomething(something=${something})")
     return "Shark bites " + something + "...ROOOAR�!"
   }
 

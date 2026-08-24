@@ -21,6 +21,7 @@ package zoo
 abstract class Fish implements Animal {
 
   String saySomething(String something) {
+	println("[DEBUG] >>> Entering saySomething(something=${something})")
     return "Blubb�: " + something + "..."
   }
 
