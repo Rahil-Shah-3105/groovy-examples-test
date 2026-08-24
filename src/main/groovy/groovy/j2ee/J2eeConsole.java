@@ -32,8 +32,10 @@ import java.util.Properties;
  * @author <a href="mailto:james@coredevelopers.net">James Strachan</a>
  */
 public class J2eeConsole {
+private static final Logger log = Logger.getLogger(J2eeConsole.class.getName());
 
     public static void main(String[] args) {
+		log.debug(">>> Entering main(args={})", args);
         if (args.length <= 0) {
             System.out.println("Usage: home [configuaration] [localcopy]");
             return;
@@ -42,6 +44,7 @@ public class J2eeConsole {
         String home = args[0];
 
         Properties p = new Properties();
+		log.debug("main(args={}): p → {}", args, p);
         System.setProperty("openejb.home", home);
         p.put(Context.INITIAL_CONTEXT_FACTORY, "org.openejb.client.LocalInitialContextFactory");
         p.put("openejb.loader", "embed");
@@ -59,14 +62,17 @@ public class J2eeConsole {
         }
         try {
             InitialContext ctx = new InitialContext(p);
+			log.debug("main(args={}): ctx → {}", args, ctx);
 
             GroovyShell shell = new GroovyShell();
             shell.setVariable("context", ctx);
+			log.debug("main(args={}): shell → {}", args, shell);
             //shell.evaluate("src/test/groovy/j2ee/CreateData.groovy");
 
             //shell.evaluate("src/main/groovy/ui/Console.groovy");
             GroovyObject console = (GroovyObject) InvokerHelper.invokeConstructorOf("groovy.ui.Console", null);
             console.setProperty("shell", shell);
+			log.debug("main(args={}): console → {}", args, console);
             console.invokeMethod("run", null);
             /*
             */
@@ -74,5 +80,6 @@ public class J2eeConsole {
         catch (Exception e) {
             System.out.println("Caught: " + e);
         }
+		log.debug("<<< Exiting main(args={})", args);
     }
 }

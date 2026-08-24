@@ -29,17 +29,21 @@ class SwingDemo {
     def frame
     
     static void main(args) {
+		println("[DEBUG] >>> Entering main(args=${args})")
         def demo = new SwingDemo()
         demo.run()
+		println("[DEBUG] <<< Exiting main(args=${args})")
     }
 
     void run() {
+		println("[DEBUG] >>> Entering run()")
         def frame = swing.frame(
             title:'This is a Frame',
             location:[100,100],
             size:[800,400],
             defaultCloseOperation:javax.swing.WindowConstants.EXIT_ON_CLOSE) {
 
+			println("[DEBUG] <<< Exiting run()")
             menuBar {
                 menu(text:'File') {
                     menuItem() {
@@ -99,6 +103,7 @@ class SwingDemo {
     }
     
     void showAbout() {
+		println("[DEBUG] >>> Entering showAbout()")
         // this version doesn't auto-size & position the dialog
         /*
         def dialog = swing.dialog(owner:frame, title:'About GroovySwing') {
@@ -108,20 +113,27 @@ class SwingDemo {
          def pane = swing.optionPane(message:'Welcome to the wonderful world of GroovySwing')
          def dialog = pane.createDialog(frame, 'About GroovySwing')
          dialog.show()
+		println("[DEBUG] <<< Exiting showAbout()")
     }
     
     void showGroovyTableDemo() {
+		println("[DEBUG] >>> Entering showGroovyTableDemo()")
         def demo = new TableDemo()
         demo.run()
+		println("[DEBUG] <<< Exiting showGroovyTableDemo()")
     }
 
     void showMVCDemo() {
+		println("[DEBUG] >>> Entering showMVCDemo()")
         def demo = new MvcDemo()
         demo.run()
+		println("[DEBUG] <<< Exiting showMVCDemo()")
     }
 
     void showTableLayoutDemo() {
+		println("[DEBUG] >>> Entering showTableLayoutDemo()")
         def demo = new TableLayoutDemo()
         demo.run()
+		println("[DEBUG] <<< Exiting showTableLayoutDemo()")
     }
 }

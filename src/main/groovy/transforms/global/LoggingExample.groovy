@@ -25,7 +25,9 @@ package transforms.global
 */ 
 
 def greet() {
+	println("[DEBUG] >>> Entering greet()")
     println "Hello World"
+	println("[DEBUG] <<< Exiting greet()")
 }
     
 // this prints out Hello World along with the extra compile time logging
