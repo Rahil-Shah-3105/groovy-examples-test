@@ -37,11 +37,13 @@ public class CompiledAtASTTransformation implements ASTTransformation {
     private static final compileTime = new Date().toString()
 
     public void visit(ASTNode[] astNodes, SourceUnit sourceUnit) {
+	println("[DEBUG] >>> Entering visit(astNodes=${astNodes},sourceUnit=${sourceUnit})")
 
         List classes = sourceUnit.ast?.classes
         classes?.each { ClassNode clazz ->
             clazz.addMethod(makeMethod())
         }
+		println("[DEBUG] <<< Exiting visit(astNodes=${astNodes},sourceUnit=${sourceUnit})")
     }
 
     /**
@@ -49,6 +51,7 @@ public class CompiledAtASTTransformation implements ASTTransformation {
     * the jar at compile time. 
     */ 
     MethodNode makeMethod() {
+		println("[DEBUG] >>> Entering makeMethod()")
         def ast = new AstBuilder().buildFromSpec {
             method('getCompiledTime', /*OpCodes.ACC_PUBLIC*/1 | /*OpCodes.ACC_STATIC*/8, String) {
                 parameters {}
@@ -62,5 +65,6 @@ public class CompiledAtASTTransformation implements ASTTransformation {
             }
         }
         ast[0]
+		println("[DEBUG] <<< Exiting makeMethod()")
     }
 }

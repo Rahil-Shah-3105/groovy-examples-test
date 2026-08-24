@@ -45,6 +45,7 @@ public class LoggingASTTransformation implements ASTTransformation {
 
 
     public void visit(ASTNode[] astNodes, SourceUnit sourceUnit) {
+		println("[DEBUG] >>> Entering visit(astNodes=${astNodes},sourceUnit=${sourceUnit})")
         List methods = sourceUnit.getAST()?.getMethods()
         methods?.each { MethodNode method ->
             Statement startMessage = createPrintlnAst("Starting $method.name")
@@ -54,12 +55,14 @@ public class LoggingASTTransformation implements ASTTransformation {
             existingStatements.add(0, startMessage)
             existingStatements.add(endMessage)
         }
+		println("[DEBUG] <<< Exiting visit(astNodes=${astNodes},sourceUnit=${sourceUnit})")
     }
 
     /**
     * Creates the AST for a println invocation. 
     */ 
     private Statement createPrintlnAst(String message) {
+		println("[DEBUG] >>> Entering createPrintlnAst(message=${message})")
         return new ExpressionStatement(
             new MethodCallExpression(
                 new VariableExpression("this"),

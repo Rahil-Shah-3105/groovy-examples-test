@@ -29,6 +29,8 @@ class MainExample {
 
     @Main
     public void greet() {
+		println("[DEBUG] >>> Entering greet()")
         println "Hello from the greet() method!"
+		println("[DEBUG] <<< Exiting greet()")
     }
 }

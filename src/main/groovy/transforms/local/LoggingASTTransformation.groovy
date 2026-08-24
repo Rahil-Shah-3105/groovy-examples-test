@@ -43,6 +43,7 @@ import org.codehaus.groovy.ast.stmt.Statement
 public class LoggingASTTransformation implements ASTTransformation {
 
     public void visit(ASTNode[] nodes, SourceUnit sourceUnit) {
+		println("[DEBUG] >>> Entering visit(nodes=${nodes},sourceUnit=${sourceUnit})")
         List methods = sourceUnit.getAST()?.getMethods()
         // find all methods annotated with @WithLogging
         methods.findAll { MethodNode method ->
@@ -55,12 +56,14 @@ public class LoggingASTTransformation implements ASTTransformation {
             existingStatements.add(0, startMessage)
             existingStatements.add(endMessage)
         }
+		println("[DEBUG] <<< Exiting visit(nodes=${nodes},sourceUnit=${sourceUnit})")
     }
 
     /**
     * This creates the ASTNode for a println statement. 
     */ 
     private Statement createPrintlnAst(String message) {
+		println("[DEBUG] >>> Entering createPrintlnAst(message=${message})")
         return new ExpressionStatement(
             new MethodCallExpression(
                 new VariableExpression("this"),
