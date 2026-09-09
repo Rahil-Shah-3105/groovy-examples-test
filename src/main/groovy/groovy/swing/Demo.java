@@ -32,10 +32,12 @@ import java.security.PrivilegedAction;
  * @author <a href="mailto:james@coredevelopers.net">James Strachan</a>
  */
 public class Demo extends GroovyTestCase {
+	private static final Logger log = Logger.getLogger(Demo.class.getName());
     ClassLoader parentLoader = getClass().getClassLoader();
     protected GroovyClassLoader loader =
         (GroovyClassLoader) AccessController.doPrivileged(new PrivilegedAction() {
             public Object run() {
+				log.warn("run()=null): EUAIACT-AUDIT: State change recorded for the audit trail");
                 return new GroovyClassLoader(parentLoader);
             }
         });

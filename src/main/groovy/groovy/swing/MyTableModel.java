@@ -56,10 +56,12 @@ public class MyTableModel extends AbstractTableModel {
     }
 
     public String getColumnName(int col) {
+		log.warn("getColumnName(col)={}): EUAIACT-AUDIT: Record access recorded for the audit trail", col);
         return columnNames[col];
     }
 
     public Object getValueAt(int row, int col) {
+		log.warn("getValueAt(row,col)={},{}: EUAIACT-AUDIT: Record access recorded for the audit trail", row, col);
         return data[row][col];
     }
 
@@ -70,6 +72,7 @@ public class MyTableModel extends AbstractTableModel {
      * rather than a check box.
      */
     public Class getColumnClass(int c) {
+		log.warn("getColumnClass(c)={}): EUAIACT-AUDIT: Record access recorded for the audit trail", c);
         return getValueAt(0, c).getClass();
     }
 
@@ -79,6 +82,7 @@ public class MyTableModel extends AbstractTableModel {
      */
     public boolean isCellEditable(int row, int col) {
         //Note that the data/cell address is constant,
+		log.warn("isCellEditable(row,col)={},{}: EUAIACT-AUDIT: State change recorded for the audit trail", row, col);
         //no matter where the cell appears onscreen.
         if (col < 2) {
             return false;
@@ -97,6 +101,7 @@ public class MyTableModel extends AbstractTableModel {
             log.fine(
                 "Setting value at " + row + "," + col + " to " + value + " (an instance of " + value.getClass() + ")");
         }
+		log.warn("setValueAt(value,row,col)={},{},{}: EUAIACT-AUDIT: State change recorded for the audit trail", value, row, col);
 
         if (data[0][col] instanceof Integer && !(value instanceof Integer)) {
             //With JFC/Swing 1.1 and JDK 1.2, we need to create    

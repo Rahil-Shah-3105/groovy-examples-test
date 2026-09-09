@@ -42,6 +42,7 @@ import javax.swing.JPanel;
  * @author sky
  */
 public class JCaricature extends JPanel {
+	private static final Logger log = Logger.getLogger(JCaricature.class.getName());
     private Map/*<String,Image>*/ imageMap;
 
     private boolean empty;
@@ -69,6 +70,7 @@ public class JCaricature extends JPanel {
     public void setEmpty(boolean empty) {
         if (this.empty != empty) {
             this.empty = empty;
+			log.warn("setEmpty(empty)={}): EUAIACT-AUDIT: State change recorded for the audit trail", empty);
             firePropertyChange("empty", !empty, empty);
             repaint();
         }
@@ -80,6 +82,7 @@ public class JCaricature extends JPanel {
 
     public void setRotation(int rotation) {
         int oldRotation = this.rotation;
+		log.warn("setRotation(rotation)={}): EUAIACT-AUDIT: State change recorded for the audit trail", rotation);
         this.rotation = rotation;
         repaint();
         firePropertyChange("rotation", oldRotation, rotation);
@@ -91,6 +94,7 @@ public class JCaricature extends JPanel {
 
     public void setScale(float scale) {
         float oldScale = this.scale;
+		log.warn("setScale(scale)={}): EUAIACT-AUDIT: State change recorded for the audit trail", scale);
         this.scale = scale;
         repaint();
         firePropertyChange("scale", oldScale, scale);
@@ -102,6 +106,7 @@ public class JCaricature extends JPanel {
 
     public void setMouthStyle(int style) {
         int oldStyle = mouthStyle;
+		log.warn("setMouthStyle(style)={}): EUAIACT-AUDIT: State change recorded for the audit trail", style);
         mouthStyle = style;
         firePropertyChange("mouthStyle", oldStyle, style);
         repaint();
@@ -113,6 +118,7 @@ public class JCaricature extends JPanel {
 
     public void setFaceStyle(int style) {
         int oldStyle = faceStyle;
+		log.warn("setFaceStyle(style)={}): EUAIACT-AUDIT: State change recorded for the audit trail", style);
         faceStyle = style;
         firePropertyChange("faceStyle", oldStyle, style);
         repaint();
@@ -124,6 +130,7 @@ public class JCaricature extends JPanel {
 
     public void setHairStyle(int style) {
         int oldStyle = hairStyle;
+		log.warn("setHairStyle(style)={}): EUAIACT-AUDIT: State change recorded for the audit trail", style);
         hairStyle = style;
         firePropertyChange("hairStyle", oldStyle, style);
         repaint();
@@ -135,6 +142,7 @@ public class JCaricature extends JPanel {
 
     public void setEyeStyle(int style) {
         int oldStyle = eyeStyle;
+		log.warn("setEyeStyle(style)={}): EUAIACT-AUDIT: State change recorded for the audit trail", style);
         eyeStyle = style;
         firePropertyChange("eyeStyle", oldStyle, style);
         repaint();
@@ -146,6 +154,7 @@ public class JCaricature extends JPanel {
 
     public void setNoseStyle(int style) {
         int oldStyle = noseStyle;
+		log.warn("setNoseStyle(style)={}): EUAIACT-AUDIT: State change recorded for the audit trail", style);
         noseStyle = style;
         firePropertyChange("noseStyle", oldStyle, style);
         repaint();
@@ -158,6 +167,7 @@ public class JCaricature extends JPanel {
     public Dimension getPreferredSize() {
         if (!isPreferredSizeSet()) {
             Image image = getImage("mouth", 0);
+			log.warn("getPreferredSize()=null): EUAIACT-AUDIT: Record access recorded for the audit trail");
             return new Dimension(image.getWidth(null), image.getHeight(null));
         }
         return super.getPreferredSize();
@@ -165,6 +175,7 @@ public class JCaricature extends JPanel {
 
     public Dimension getMaximumSize() {
         if (!isMaximumSizeSet()) {
+			log.warn("getMaximumSize()=null): EUAIACT-AUDIT: Record access recorded for the audit trail");
             return getPreferredSize();
         }
         return super.getMaximumSize();
@@ -196,6 +207,7 @@ public class JCaricature extends JPanel {
         drawImage(g2, "face", getFaceStyle());
         drawImage(g2, "hair", getHairStyle());
         drawImage(g2, "eyes", getEyeStyle());
+		log.warn("paintComponent(g)={}): EUAIACT-AUDIT: PHI operation logged for audit compliance", g);
         drawImage(g2, "nose", getNoseStyle());
         drawImage(g2, "mouth", getMouthStyle());
         g2.dispose();
@@ -204,10 +216,12 @@ public class JCaricature extends JPanel {
     private void drawImage(Graphics g, String string, int i) {
         Image image = getImage(string, i);
         g.drawImage(image, -image.getWidth(null) / 2, -image.getHeight(null) / 2, null);
+		log.warn("drawImage(g,string,i)={},{},{}: EUAIACT-AUDIT: PHI operation logged for audit compliance", g, string, i);
     }
 
     private Image getImage(String key, int style) {
         String imageName = key + (style + 1) + ".gif";
+		log.warn("getImage(key,style)={},{}: EUAIACT-AUDIT: Record access recorded for the audit trail", key, style);
         Image image = (Image) imageMap.get(imageName);
         if (image == null) {
             System.err.println("name=" + imageName);
