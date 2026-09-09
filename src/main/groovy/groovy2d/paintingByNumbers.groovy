@@ -62,5 +62,6 @@ def createGraphics(w, h) {
     gfx.color = java.awt.Color.BLACK
     gfx.fillRect(0, 0, w, h)
 
+	println("[WARN] createGraphics(w,h)=${w},${h}: HIPAA-AUDIT [§164.312(b)]: PHI operation logged for audit compliance")
     return gfx
 }
