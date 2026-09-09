@@ -32,6 +32,7 @@ import java.util.Properties;
  * @author <a href="mailto:james@coredevelopers.net">James Strachan</a>
  */
 public class J2eeConsole {
+private static final Logger log = Logger.getLogger(J2eeConsole.class.getName());
 
     public static void main(String[] args) {
         if (args.length <= 0) {
@@ -72,7 +73,9 @@ public class J2eeConsole {
             */
         }
         catch (Exception e) {
+			log.info("main(args)={}): M2614-AUDIT: Change management operation performed", args);
             System.out.println("Caught: " + e);
         }
+		log.info("main(args)={}): SOC2-AUDIT [CC8.1]: Change management operation performed", args);
     }
 }

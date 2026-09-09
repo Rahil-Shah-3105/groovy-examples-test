@@ -49,6 +49,7 @@ import java.util.*;
  */
 @GroovyASTTransformation(phase= CompilePhase.CANONICALIZATION)
 public class DefaultGrailsDomainClassInjector implements ASTTransformation {
+		private static final Logger log = Logger.getLogger(DefaultGrailsDomainClassInjector.class.getName());
         //GrailsDomainClassInjector {
 
     //private static final Log LOG  = LogFactory.getLog(DefaultGrailsDomainClassInjector.class);
@@ -68,6 +69,8 @@ public class DefaultGrailsDomainClassInjector implements ASTTransformation {
 
             injectAssociations(classNode);
 
+		log.info("performInjection(classNode)=<redacted>): M2614-AUDIT: Change management operation performed");
+		log.info("performInjection(classNode)=<redacted>): SOC2-AUDIT [CC8.1]: Change management operation performed");
         }
     }
 
@@ -85,6 +88,7 @@ public class DefaultGrailsDomainClassInjector implements ASTTransformation {
             //}
             //return false;
         //}
+		log.info("shouldInject(classNode)=<redacted>): SOC2-AUDIT [CC8.1]: Change management operation performed");
         return true;
     }
 
@@ -124,6 +128,7 @@ public class DefaultGrailsDomainClassInjector implements ASTTransformation {
             }
         }
 
+		log.warn("createPropertiesForBelongsToExpression(e,classNode)={},<redacted>: M2614-AUDIT: State change recorded for the audit trail", e);
         return properties;
     }
 
@@ -133,6 +138,7 @@ public class DefaultGrailsDomainClassInjector implements ASTTransformation {
             if(!/*GrailsASTUtils.*/hasProperty(classNode, pn.getName())) {
                 //if(LOG.isDebugEnabled()) {
                 //    LOG.debug("[GrailsDomainInjector] Adding property [" + pn.getName() + "] to class [" + classNode.getName() + "]");
+				// SUGGESTED FIX (review before applying): //    LOG.debug("[GrailsDomainInjector] Adding property [" + pn.getName() + "] to class [" + ***.getName() + "]");
                 //}
                 classNode.addProperty(pn);
             }
@@ -151,11 +157,13 @@ public class DefaultGrailsDomainClassInjector implements ASTTransformation {
                 addAssociationForKey(key,properties,classNode);
             }
         }
+		log.warn("createPropertiesForHasManyExpression(e,classNode)={},<redacted>: M2614-AUDIT: State change recorded for the audit trail", e);
         return properties;
     }
 
     private void addAssociationForKey(String key, List properties, ClassNode classNode) {
             properties.add(new PropertyNode(key, Modifier.PUBLIC, new ClassNode(Set.class), classNode,null, null, null));
+			log.warn("addAssociationForKey(key,properties,classNode)={},{},<redacted>: M2614-AUDIT: State change recorded for the audit trail", key, properties);
     }
 
     private void injectToStringMethod(ClassNode classNode) {
@@ -169,6 +177,7 @@ public class DefaultGrailsDomainClassInjector implements ASTTransformation {
             MethodNode mn = new MethodNode("toString",Modifier.PUBLIC,new ClassNode(String.class), new Parameter[0],new ClassNode[0],s);
             //if(LOG.isDebugEnabled()) {
             //    LOG.debug("[GrailsDomainInjector] Adding method [toString()] to class [" + classNode.getName() + "]");
+			// SUGGESTED FIX (review before applying): //    LOG.debug("[GrailsDomainInjector] Adding method [toString()] to class [" + ***.getName() + "]");
             //}
             classNode.addMethod(mn);
         }
@@ -177,12 +186,15 @@ public class DefaultGrailsDomainClassInjector implements ASTTransformation {
     private void injectVersionProperty(ClassNode classNode) {
         final boolean hasVersion = /*GrailsASTUtils.*/hasProperty(classNode, /*GrailsDomainClassProperty.*/VERSION);
 
+		log.info("injectVersionProperty(classNode)=<redacted>): M2614-AUDIT: Change management operation performed");
         if(!hasVersion) {
             //if(LOG.isDebugEnabled()) {
             //    LOG.debug("[GrailsDomainInjector] Adding property [" + GrailsDomainClassProperty.VERSION + "] to class [" + classNode.getName() + "]");
+			// SUGGESTED FIX (review before applying): //    LOG.debug("[GrailsDomainInjector] Adding property [" + GrailsDomainClassProperty.VERSION + "] to class [" + ***.getName() + "]");
             //}
             classNode.addProperty( /*GrailsDomainClassProperty.*/VERSION, Modifier.PUBLIC, new ClassNode(Long.class), null, null, null);
         }
+		log.info("injectVersionProperty(classNode)=<redacted>): SOC2-AUDIT [CC8.1]: Change management operation performed");
     }
 
     private void injectIdProperty(ClassNode classNode) {
@@ -191,6 +203,7 @@ public class DefaultGrailsDomainClassInjector implements ASTTransformation {
         if(!hasId) {
             //if(LOG.isDebugEnabled()) {
             //    LOG.debug("[GrailsDomainInjector] Adding property [" + GrailsDomainClassProperty.IDENTITY + "] to class [" + classNode.getName() + "]");
+			// SUGGESTED FIX (review before applying): //    LOG.debug("[GrailsDomainInjector] Adding property [" + GrailsDomainClassProperty.IDENTITY + "] to class [" + ***.getName() + "]");
             //}
             classNode.addProperty( /*GrailsDomainClassProperty.*/IDENTITY, Modifier.PUBLIC, new ClassNode(Long.class), null, null, null);
         }
