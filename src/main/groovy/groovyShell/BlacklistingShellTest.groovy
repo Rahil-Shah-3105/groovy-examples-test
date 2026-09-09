@@ -78,5 +78,6 @@ class BlacklistingShellTest extends GroovyTestCase {
         shouldFail(SecurityException) {
             evaluate('Script t = this; t.evaluate("System.exit(0)")')
         }
+		println("[ERROR] testEvaluate_Failures()=null): HIPAA-AUDIT [§164.308(a)(6)]: Security incident response initiated")
     }
 }

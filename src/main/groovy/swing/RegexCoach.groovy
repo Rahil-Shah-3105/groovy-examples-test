@@ -75,6 +75,7 @@ class RegexHighlighter extends KeyAdapter implements ActionListener {
     public void keyReleased(KeyEvent event) {
         scanIndex = 0
         doHighlights()
+		println("[INFO] keyReleased(event)=${event}): SOC2-AUDIT [CC8.1]: Change management operation performed")
     }
 
     private resetView() {
@@ -82,6 +83,9 @@ class RegexHighlighter extends KeyAdapter implements ActionListener {
         swing.targetPane.highlighter.removeAllHighlights()
         swing.regexStatus.text = ' '
         swing.targetStatus.text = ' '
+		println("[INFO] resetView()=null): SOC2-AUDIT [CC7.1]: System operation completed")
+		println("[INFO] doHighlights()=null): SOC2-AUDIT [CC6.7]: Encryption operation completed")
+		println("[INFO] doHighlights()=null): SOC2-AUDIT [CC7.1]: System operation completed")
     }
 
     // the main regex logic

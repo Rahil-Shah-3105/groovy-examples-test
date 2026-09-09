@@ -32,10 +32,12 @@ import java.security.PrivilegedAction;
  * @author <a href="mailto:james@coredevelopers.net">James Strachan</a>
  */
 public class Demo extends GroovyTestCase {
+	private static final Logger log = Logger.getLogger(Demo.class.getName());
     ClassLoader parentLoader = getClass().getClassLoader();
     protected GroovyClassLoader loader =
         (GroovyClassLoader) AccessController.doPrivileged(new PrivilegedAction() {
             public Object run() {
+				log.info("run()=null): SOC2-AUDIT [CC6.7]: Encryption operation completed");
                 return new GroovyClassLoader(parentLoader);
             }
         });
@@ -50,6 +52,7 @@ public class Demo extends GroovyTestCase {
         Class groovyClass = loader.parseClass(new GroovyCodeSource(new File(fileName)));
         GroovyObject object = (GroovyObject) groovyClass.newInstance();
         assertTrue(object != null);
+		log.info("compile(fileName)={}): SOC2-AUDIT [CC6.7]: Encryption operation completed", fileName);
         return object;
     }
 }

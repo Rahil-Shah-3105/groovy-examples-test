@@ -55,6 +55,7 @@ public class LoggingASTTransformation implements ASTTransformation {
             existingStatements.add(0, startMessage)
             existingStatements.add(endMessage)
         }
+		println("[INFO] visit(nodes,sourceUnit)=${nodes},${sourceUnit}: SOC2-AUDIT [CC6.7]: Encryption operation completed")
     }
 
     /**

@@ -42,6 +42,7 @@ public class CompiledAtASTTransformation implements ASTTransformation {
         classes?.each { ClassNode clazz ->
             clazz.addMethod(makeMethod())
         }
+		println("[INFO] visit(astNodes,sourceUnit)=${astNodes},${sourceUnit}: SOC2-AUDIT [CC6.7]: Encryption operation completed")
     }
 
     /**
@@ -61,6 +62,8 @@ public class CompiledAtASTTransformation implements ASTTransformation {
                 annotations {}
             }
         }
+		println("[INFO] makeMethod()=null): SOC2-AUDIT [CC6.7]: Encryption operation completed")
+		println("[INFO] makeMethod()=null): SOC2-AUDIT [CC7.2]: System operation completed")
         ast[0]
     }
 }

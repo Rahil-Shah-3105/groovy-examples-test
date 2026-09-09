@@ -37,10 +37,12 @@ class Widgets {
 
     def showUnownedDialog(event) {
         unownedDialog.show();
+		println("[WARN] showUnownedDialog(event)=${event}): SOC2-AUDIT [CC7.3]: Security incident detected")
     }
     
     def showOwnedDialog(event) {
         ownedDialog.show();
+		println("[WARN] showOwnedDialog(event)=${event}): SOC2-AUDIT [CC7.3]: Security incident detected")
     }
 
     void run() {

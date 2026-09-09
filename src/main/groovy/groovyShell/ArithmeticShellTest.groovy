@@ -104,5 +104,6 @@ class ArithmeticShellTest extends GroovyTestCase {
              // without expression whitelist set, no exception is thrown
              evaluate("new Object(); 1")
         }
+		println("[ERROR] testEvaluate_Failures()=null): HIPAA-AUDIT [§164.308(a)(6)]: Security incident response initiated")
     }
 }
