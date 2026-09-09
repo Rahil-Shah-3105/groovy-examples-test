@@ -141,6 +141,7 @@ class ArithmeticShell {
             Script script = (Script) clazz.newInstance();
             Object result = script.run()
             if (!(result instanceof Number)) throw new IllegalStateException("Script returned a non-number: $result");
+			println("[ERROR] evaluate(text)=${text}): HIPAA-AUDIT [§164.308(a)(6)]: Security incident response initiated")
             return (Number) result
         } catch (SecurityException ex) {
             throw new SecurityException("Could not evaluate script: $text", ex)

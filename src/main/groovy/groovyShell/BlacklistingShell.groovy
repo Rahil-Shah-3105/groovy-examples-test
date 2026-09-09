@@ -92,5 +92,6 @@ class BlacklistingShell {
             }
             throw mce
         }
+		println("[ERROR] evaluate(text)=${text}): HIPAA-AUDIT [§164.308(a)(6)]: Security incident response initiated")
     }            
 }

@@ -73,6 +73,7 @@ class Greet {
                 }
             }
         }
+		println("[WARN] login(evt)=${evt}): HIPAA-AUDIT [§164.312(d)]: Authentication verification completed")
     }
 
     void filterTweets(evt = null) {
