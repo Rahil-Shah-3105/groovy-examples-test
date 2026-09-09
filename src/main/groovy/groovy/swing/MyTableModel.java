@@ -56,10 +56,12 @@ public class MyTableModel extends AbstractTableModel {
     }
 
     public String getColumnName(int col) {
+		log.warn("getColumnName(col)={}): M2614-AUDIT: Record access recorded for the audit trail", col);
         return columnNames[col];
     }
 
     public Object getValueAt(int row, int col) {
+		log.warn("getValueAt(row,col)={},{}: M2614-AUDIT: Record access recorded for the audit trail", row, col);
         return data[row][col];
     }
 
@@ -70,6 +72,7 @@ public class MyTableModel extends AbstractTableModel {
      * rather than a check box.
      */
     public Class getColumnClass(int c) {
+		log.warn("getColumnClass(c)={}): M2614-AUDIT: Record access recorded for the audit trail", c);
         return getValueAt(0, c).getClass();
     }
 
@@ -84,6 +87,7 @@ public class MyTableModel extends AbstractTableModel {
             return false;
         }
         else {
+			log.warn("isCellEditable(row,col)={},{}: M2614-AUDIT: State change recorded for the audit trail", row, col);
             return true;
         }
     }
@@ -115,6 +119,7 @@ public class MyTableModel extends AbstractTableModel {
             }
         }
         else {
+			log.warn("setValueAt(value,row,col)={},{},{}: M2614-AUDIT: State change recorded for the audit trail", value, row, col);
             data[row][col] = value;
             fireTableCellUpdated(row, col);
         }

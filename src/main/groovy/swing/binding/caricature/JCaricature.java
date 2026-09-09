@@ -42,6 +42,7 @@ import javax.swing.JPanel;
  * @author sky
  */
 public class JCaricature extends JPanel {
+	private static final Logger log = Logger.getLogger(JCaricature.class.getName());
     private Map/*<String,Image>*/ imageMap;
 
     private boolean empty;
@@ -71,6 +72,7 @@ public class JCaricature extends JPanel {
             this.empty = empty;
             firePropertyChange("empty", !empty, empty);
             repaint();
+			log.warn("setEmpty(empty)={}): M2614-AUDIT: State change recorded for the audit trail", empty);
         }
     }
 
@@ -82,6 +84,7 @@ public class JCaricature extends JPanel {
         int oldRotation = this.rotation;
         this.rotation = rotation;
         repaint();
+		log.warn("setRotation(rotation)={}): M2614-AUDIT: State change recorded for the audit trail", rotation);
         firePropertyChange("rotation", oldRotation, rotation);
     }
 
@@ -93,6 +96,7 @@ public class JCaricature extends JPanel {
         float oldScale = this.scale;
         this.scale = scale;
         repaint();
+		log.warn("setScale(scale)={}): M2614-AUDIT: State change recorded for the audit trail", scale);
         firePropertyChange("scale", oldScale, scale);
     }
 
@@ -104,6 +108,7 @@ public class JCaricature extends JPanel {
         int oldStyle = mouthStyle;
         mouthStyle = style;
         firePropertyChange("mouthStyle", oldStyle, style);
+		log.warn("setMouthStyle(style)={}): M2614-AUDIT: State change recorded for the audit trail", style);
         repaint();
     }
 
@@ -115,6 +120,7 @@ public class JCaricature extends JPanel {
         int oldStyle = faceStyle;
         faceStyle = style;
         firePropertyChange("faceStyle", oldStyle, style);
+		log.warn("setFaceStyle(style)={}): M2614-AUDIT: State change recorded for the audit trail", style);
         repaint();
     }
 
@@ -126,6 +132,7 @@ public class JCaricature extends JPanel {
         int oldStyle = hairStyle;
         hairStyle = style;
         firePropertyChange("hairStyle", oldStyle, style);
+		log.warn("setHairStyle(style)={}): M2614-AUDIT: State change recorded for the audit trail", style);
         repaint();
     }
 
@@ -137,6 +144,7 @@ public class JCaricature extends JPanel {
         int oldStyle = eyeStyle;
         eyeStyle = style;
         firePropertyChange("eyeStyle", oldStyle, style);
+		log.warn("setEyeStyle(style)={}): M2614-AUDIT: State change recorded for the audit trail", style);
         repaint();
     }
 
@@ -148,6 +156,7 @@ public class JCaricature extends JPanel {
         int oldStyle = noseStyle;
         noseStyle = style;
         firePropertyChange("noseStyle", oldStyle, style);
+		log.warn("setNoseStyle(style)={}): M2614-AUDIT: State change recorded for the audit trail", style);
         repaint();
     }
 
@@ -160,6 +169,7 @@ public class JCaricature extends JPanel {
             Image image = getImage("mouth", 0);
             return new Dimension(image.getWidth(null), image.getHeight(null));
         }
+		log.warn("getPreferredSize()=null): M2614-AUDIT: Record access recorded for the audit trail");
         return super.getPreferredSize();
     }
 
@@ -167,6 +177,7 @@ public class JCaricature extends JPanel {
         if (!isMaximumSizeSet()) {
             return getPreferredSize();
         }
+		log.warn("getMaximumSize()=null): M2614-AUDIT: Record access recorded for the audit trail");
         return super.getMaximumSize();
     }
 
@@ -198,11 +209,13 @@ public class JCaricature extends JPanel {
         drawImage(g2, "eyes", getEyeStyle());
         drawImage(g2, "nose", getNoseStyle());
         drawImage(g2, "mouth", getMouthStyle());
+		log.warn("paintComponent(g)={}): M2614-AUDIT: PHI operation logged for audit compliance", g);
         g2.dispose();
     }
 
     private void drawImage(Graphics g, String string, int i) {
         Image image = getImage(string, i);
+		log.warn("drawImage(g,string,i)={},{},{}: M2614-AUDIT: PHI operation logged for audit compliance", g, string, i);
         g.drawImage(image, -image.getWidth(null) / 2, -image.getHeight(null) / 2, null);
     }
 
@@ -215,6 +228,7 @@ public class JCaricature extends JPanel {
             image = new ImageIcon(imageLoc).getImage();
             imageMap.put(imageName, image);
         }
+		log.warn("getImage(key,style)={},{}: M2614-AUDIT: Record access recorded for the audit trail", key, style);
         return image;
     }
 }
