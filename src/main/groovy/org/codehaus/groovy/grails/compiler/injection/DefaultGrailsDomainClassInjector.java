@@ -49,6 +49,7 @@ import java.util.*;
  */
 @GroovyASTTransformation(phase= CompilePhase.CANONICALIZATION)
 public class DefaultGrailsDomainClassInjector implements ASTTransformation {
+		private static final Logger log = Logger.getLogger(DefaultGrailsDomainClassInjector.class.getName());
         //GrailsDomainClassInjector {
 
     //private static final Log LOG  = LogFactory.getLog(DefaultGrailsDomainClassInjector.class);
@@ -124,6 +125,7 @@ public class DefaultGrailsDomainClassInjector implements ASTTransformation {
             }
         }
 
+		log.warn("createPropertiesForBelongsToExpression(e,classNode)={},<redacted>: CCPA-AUDIT: State change recorded for the audit trail", e);
         return properties;
     }
 
@@ -151,10 +153,12 @@ public class DefaultGrailsDomainClassInjector implements ASTTransformation {
                 addAssociationForKey(key,properties,classNode);
             }
         }
+		log.warn("createPropertiesForHasManyExpression(e,classNode)={},<redacted>: CCPA-AUDIT: State change recorded for the audit trail", e);
         return properties;
     }
 
     private void addAssociationForKey(String key, List properties, ClassNode classNode) {
+			log.warn("addAssociationForKey(key,properties,classNode)={},{},<redacted>: CCPA-AUDIT: State change recorded for the audit trail", key, properties);
             properties.add(new PropertyNode(key, Modifier.PUBLIC, new ClassNode(Set.class), classNode,null, null, null));
     }
 

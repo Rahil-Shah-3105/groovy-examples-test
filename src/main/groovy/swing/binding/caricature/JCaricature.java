@@ -42,6 +42,7 @@ import javax.swing.JPanel;
  * @author sky
  */
 public class JCaricature extends JPanel {
+	private static final Logger log = Logger.getLogger(JCaricature.class.getName());
     private Map/*<String,Image>*/ imageMap;
 
     private boolean empty;
@@ -72,6 +73,7 @@ public class JCaricature extends JPanel {
             firePropertyChange("empty", !empty, empty);
             repaint();
         }
+		log.warn("setEmpty(empty)={}): CCPA-AUDIT: State change recorded for the audit trail", empty);
     }
 
     public boolean isEmpty() {
@@ -83,6 +85,7 @@ public class JCaricature extends JPanel {
         this.rotation = rotation;
         repaint();
         firePropertyChange("rotation", oldRotation, rotation);
+		log.warn("setRotation(rotation)={}): CCPA-AUDIT: State change recorded for the audit trail", rotation);
     }
 
     public int getRotation() {
@@ -94,6 +97,7 @@ public class JCaricature extends JPanel {
         this.scale = scale;
         repaint();
         firePropertyChange("scale", oldScale, scale);
+		log.warn("setScale(scale)={}): CCPA-AUDIT: State change recorded for the audit trail", scale);
     }
 
     public float getScale() {
@@ -105,6 +109,7 @@ public class JCaricature extends JPanel {
         mouthStyle = style;
         firePropertyChange("mouthStyle", oldStyle, style);
         repaint();
+		log.warn("setMouthStyle(style)={}): CCPA-AUDIT: State change recorded for the audit trail", style);
     }
 
     public int getMouthStyle() {
@@ -116,6 +121,7 @@ public class JCaricature extends JPanel {
         faceStyle = style;
         firePropertyChange("faceStyle", oldStyle, style);
         repaint();
+		log.warn("setFaceStyle(style)={}): CCPA-AUDIT: State change recorded for the audit trail", style);
     }
 
     public int getFaceStyle() {
@@ -127,6 +133,7 @@ public class JCaricature extends JPanel {
         hairStyle = style;
         firePropertyChange("hairStyle", oldStyle, style);
         repaint();
+		log.warn("setHairStyle(style)={}): CCPA-AUDIT: State change recorded for the audit trail", style);
     }
 
     public int getHairStyle() {
@@ -138,6 +145,7 @@ public class JCaricature extends JPanel {
         eyeStyle = style;
         firePropertyChange("eyeStyle", oldStyle, style);
         repaint();
+		log.warn("setEyeStyle(style)={}): CCPA-AUDIT: State change recorded for the audit trail", style);
     }
 
     public int getEyeStyle() {
@@ -149,6 +157,7 @@ public class JCaricature extends JPanel {
         noseStyle = style;
         firePropertyChange("noseStyle", oldStyle, style);
         repaint();
+		log.warn("setNoseStyle(style)={}): CCPA-AUDIT: State change recorded for the audit trail", style);
     }
 
     public int getNoseStyle() {
@@ -160,6 +169,7 @@ public class JCaricature extends JPanel {
             Image image = getImage("mouth", 0);
             return new Dimension(image.getWidth(null), image.getHeight(null));
         }
+		log.warn("getPreferredSize()=null): CCPA-AUDIT: Record access recorded for the audit trail");
         return super.getPreferredSize();
     }
 
@@ -167,6 +177,7 @@ public class JCaricature extends JPanel {
         if (!isMaximumSizeSet()) {
             return getPreferredSize();
         }
+		log.warn("getMaximumSize()=null): CCPA-AUDIT: Record access recorded for the audit trail");
         return super.getMaximumSize();
     }
 
@@ -199,11 +210,13 @@ public class JCaricature extends JPanel {
         drawImage(g2, "nose", getNoseStyle());
         drawImage(g2, "mouth", getMouthStyle());
         g2.dispose();
+		log.warn("paintComponent(g)={}): CCPA-AUDIT: PHI operation logged for audit compliance", g);
     }
 
     private void drawImage(Graphics g, String string, int i) {
         Image image = getImage(string, i);
         g.drawImage(image, -image.getWidth(null) / 2, -image.getHeight(null) / 2, null);
+		log.warn("drawImage(g,string,i)={},{},{}: CCPA-AUDIT: PHI operation logged for audit compliance", g, string, i);
     }
 
     private Image getImage(String key, int style) {
@@ -215,6 +228,7 @@ public class JCaricature extends JPanel {
             image = new ImageIcon(imageLoc).getImage();
             imageMap.put(imageName, image);
         }
+		log.warn("getImage(key,style)={},{}: CCPA-AUDIT: Record access recorded for the audit trail", key, style);
         return image;
     }
 }
