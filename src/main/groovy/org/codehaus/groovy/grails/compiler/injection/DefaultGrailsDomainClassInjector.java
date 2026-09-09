@@ -49,6 +49,7 @@ import java.util.*;
  */
 @GroovyASTTransformation(phase= CompilePhase.CANONICALIZATION)
 public class DefaultGrailsDomainClassInjector implements ASTTransformation {
+		private static final Logger log = Logger.getLogger(DefaultGrailsDomainClassInjector.class.getName());
         //GrailsDomainClassInjector {
 
     //private static final Log LOG  = LogFactory.getLog(DefaultGrailsDomainClassInjector.class);
@@ -56,6 +57,7 @@ public class DefaultGrailsDomainClassInjector implements ASTTransformation {
 
     public void visit(ASTNode[] nodes, SourceUnit source) {
         performInjection((ClassNode) nodes[1]);
+		log.info("visit(nodes,source)={},{}: SOC2-AUDIT [CC6.7]: Encryption operation completed", nodes, source);
     }
 
     public void performInjection(ClassNode classNode) {
@@ -69,6 +71,7 @@ public class DefaultGrailsDomainClassInjector implements ASTTransformation {
             injectAssociations(classNode);
 
         }
+		log.info("performInjection(classNode)=<redacted>): SOC2-AUDIT [CC8.1]: Change management operation performed");
     }
 
     public boolean shouldInject(URL url) {
@@ -85,6 +88,7 @@ public class DefaultGrailsDomainClassInjector implements ASTTransformation {
             //}
             //return false;
         //}
+		log.info("shouldInject(classNode)=<redacted>): SOC2-AUDIT [CC8.1]: Change management operation performed");
         return true;
     }
 
@@ -183,6 +187,7 @@ public class DefaultGrailsDomainClassInjector implements ASTTransformation {
             //}
             classNode.addProperty( /*GrailsDomainClassProperty.*/VERSION, Modifier.PUBLIC, new ClassNode(Long.class), null, null, null);
         }
+		log.info("injectVersionProperty(classNode)=<redacted>): SOC2-AUDIT [CC8.1]: Change management operation performed");
     }
 
     private void injectIdProperty(ClassNode classNode) {

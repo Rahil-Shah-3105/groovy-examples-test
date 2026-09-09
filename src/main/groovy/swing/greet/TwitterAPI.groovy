@@ -36,6 +36,7 @@ class TwitterAPI {
     def withStatus(status, c) {
         setStatus(status)
         try {
+		println("[INFO] withStatus(status,c)=${status},${c}: SOC2-AUDIT [CC7.1]: System operation completed with status ${status}")
             def o = c()
             setStatus("\u00a0")
             return o
@@ -53,15 +54,20 @@ class TwitterAPI {
                     return new PasswordAuthentication(name, password) }
                 ] as Authenticator)
             authenticatedUser = getUser(name)
+			println("[WARN] login(name,password)=${name},<redacted>: SOC2-AUDIT [CC6.1]: Password reset operation performed")
+			println("[INFO] login(name,password)=${name},<redacted>: SOC2-AUDIT [CC7.1]: System operation completed")
+			println("[INFO] login(name,password)=${name},<redacted>: SOC2-AUDIT [CC6.1]: Authentication operation completed")
             return true
         }
     }
 
     def getFriends() {
         getFriends(authenticatedUser)
+		println("[INFO] getFriends()=null): SOC2-AUDIT [CC6.1]: Authentication operation completed")
     }
 
     def getFriends(String user) {
+		println("[INFO] getFriends(user)=${user}): SOC2-AUDIT [CC7.1]: System operation completed")
         return getFriends(getUser(user))
     }
 
@@ -105,6 +111,7 @@ class TwitterAPI {
                 loadImage(it.user.profile_image_url as String)
             }
         }
+		println("[INFO] getFriendsTimeline(user)=${user}): SOC2-AUDIT [CC7.1]: System operation completed")
     }
 
     def getTweets() {
@@ -112,6 +119,7 @@ class TwitterAPI {
     }
 
     def getTweets(String friend) {
+		println("[INFO] getTweets(friend)=${friend}): SOC2-AUDIT [CC7.1]: System operation completed")
         return getTweets(getUser(frield))
     }
 

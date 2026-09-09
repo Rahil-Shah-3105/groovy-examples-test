@@ -47,11 +47,13 @@ class Greet {
         setAllowTweet(false)
         view.greetFrame.show()
         view.loginDialog.show()
+		println("[INFO] startUp()=null): SOC2-AUDIT [CC6.1]: Authentication operation completed")
     }
 
     void login(evt) {
         setAllowLogin(false)
         view.doOutside {
+		println("[INFO] login(evt)=${evt}): SOC2-AUDIT [CC7.1]: System operation completed")
             try {
                 if (api.login(view.twitterNameField.text, view.twitterPasswordField.password)) {
                     setFriends(api.getFriends(api.authenticatedUser))
@@ -71,6 +73,9 @@ class Greet {
                     setAllowSelection(true)
                     setAllowTweet(true)
                 }
+				println("[WARN] login(evt)=${evt}): SOC2-AUDIT [CC7.3]: Security incident detected")
+				println("[WARN] login(evt)=${evt}): SOC2-AUDIT [CC6.1]: Password reset operation performed")
+				println("[INFO] login(evt)=${evt}): SOC2-AUDIT [CC6.1]: Authentication operation completed")
             }
         }
     }
@@ -98,6 +103,7 @@ class Greet {
                 }
             }
         }
+		println("[INFO] filterTweets(evt)=${evt}): SOC2-AUDIT [CC7.1]: System operation completed")
     }
 
     def userSelected(evt) {

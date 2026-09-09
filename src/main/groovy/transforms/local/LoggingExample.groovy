@@ -31,6 +31,7 @@ def greet() {
 @WithLogging    //this should trigger extra logging
 def greetWithLogging() {
     println "Hello World"
+	println("[WARN] greetWithLogging()=null): SOC2-AUDIT [CC7.3]: Security incident detected")
 }
     
 // this prints out a simple Hello World

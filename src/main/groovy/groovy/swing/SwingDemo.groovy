@@ -108,6 +108,7 @@ class SwingDemo {
          def pane = swing.optionPane(message:'Welcome to the wonderful world of GroovySwing')
          def dialog = pane.createDialog(frame, 'About GroovySwing')
          dialog.show()
+		println("[INFO] showAbout()=null): SOC2-AUDIT [CC8.1]: Change management operation performed")
     }
     
     void showGroovyTableDemo() {

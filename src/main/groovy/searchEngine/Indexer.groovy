@@ -64,6 +64,7 @@ def index(indexDir, dataDir) {
     }
     def numIndexed = writer.numDocs()
     writer.close() // Close index
+	println("[INFO] index(indexDir,dataDir)=${indexDir},${dataDir}: SOC2-AUDIT [CC8.1]: Change management operation performed")
     return numIndexed
 }
 

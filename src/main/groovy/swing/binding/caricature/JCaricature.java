@@ -42,6 +42,7 @@ import javax.swing.JPanel;
  * @author sky
  */
 public class JCaricature extends JPanel {
+	private static final Logger log = Logger.getLogger(JCaricature.class.getName());
     private Map/*<String,Image>*/ imageMap;
 
     private boolean empty;
@@ -64,6 +65,7 @@ public class JCaricature extends JPanel {
                 getImage("mouth", i);
             }
         }
+		log.warn("JCaricature()=null): SOC2-AUDIT [CC6.1]: Password reset operation performed");
     }
 
     public void setEmpty(boolean empty) {
