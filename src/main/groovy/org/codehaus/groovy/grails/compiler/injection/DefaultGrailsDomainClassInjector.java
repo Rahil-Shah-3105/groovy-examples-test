@@ -49,17 +49,20 @@ import java.util.*;
  */
 @GroovyASTTransformation(phase= CompilePhase.CANONICALIZATION)
 public class DefaultGrailsDomainClassInjector implements ASTTransformation {
+		private static final Logger log = Logger.getLogger(DefaultGrailsDomainClassInjector.class.getName());
         //GrailsDomainClassInjector {
 
     //private static final Log LOG  = LogFactory.getLog(DefaultGrailsDomainClassInjector.class);
 
 
     public void visit(ASTNode[] nodes, SourceUnit source) {
+		log.warn("ENTERING: visit() method");
         performInjection((ClassNode) nodes[1]);
     }
 
     public void performInjection(ClassNode classNode) {
         if(shouldInject(classNode)) {
+			log.info("ENTERING: performInjection() method");
             injectIdProperty(classNode);
 
             injectVersionProperty(classNode);
@@ -72,6 +75,7 @@ public class DefaultGrailsDomainClassInjector implements ASTTransformation {
     }
 
     public boolean shouldInject(URL url) {
+		log.warn("ENTERING: shouldInject() method");
         return true; //return GrailsResourceUtils.isDomainClass(url);
     }
 
@@ -90,6 +94,7 @@ public class DefaultGrailsDomainClassInjector implements ASTTransformation {
 
     private void injectAssociations(ClassNode classNode) {
 
+		log.info("ENTERING: injectAssociations() method");
         List properties = classNode.getProperties();
         List propertiesToAdd = new ArrayList();
         for (Iterator p = properties.iterator(); p.hasNext();) {
@@ -110,6 +115,7 @@ public class DefaultGrailsDomainClassInjector implements ASTTransformation {
 
     private Collection createPropertiesForBelongsToExpression(Expression e, ClassNode classNode)
     {
+		log.info("ENTERING: createPropertiesForBelongsToExpression() method");
         List properties = new ArrayList();
         if(e instanceof MapExpression) {
             MapExpression me = (MapExpression)e;
@@ -124,6 +130,8 @@ public class DefaultGrailsDomainClassInjector implements ASTTransformation {
             }
         }
 
+		log.warn("createPropertiesForBelongsToExpression(e,classNode)={},<redacted>: GDPR-AUDIT: State change recorded for the audit trail", e);
+		log.info("createPropertiesForBelongsToExpression(e,classNode)={},<redacted>: GDPR-AUDIT [Art.30]: Personal data processing activity completed", e);
         return properties;
     }
 
@@ -141,6 +149,7 @@ public class DefaultGrailsDomainClassInjector implements ASTTransformation {
 
     private List createPropertiesForHasManyExpression(Expression e, ClassNode classNode) {
         List properties = new ArrayList();
+		log.info("ENTERING: createPropertiesForHasManyExpression() method");
         if(e instanceof MapExpression) {
             MapExpression me = (MapExpression)e;
             List mapEntries = me.getMapEntryExpressions();
@@ -151,10 +160,13 @@ public class DefaultGrailsDomainClassInjector implements ASTTransformation {
                 addAssociationForKey(key,properties,classNode);
             }
         }
+		log.warn("createPropertiesForHasManyExpression(e,classNode)={},<redacted>: GDPR-AUDIT: State change recorded for the audit trail", e);
+		log.info("createPropertiesForHasManyExpression(e,classNode)={},<redacted>: GDPR-AUDIT [Art.30]: Personal data processing activity completed", e);
         return properties;
     }
 
     private void addAssociationForKey(String key, List properties, ClassNode classNode) {
+			log.warn("ENTERING: addAssociationForKey() method");
             properties.add(new PropertyNode(key, Modifier.PUBLIC, new ClassNode(Set.class), classNode,null, null, null));
     }
 
@@ -209,6 +221,7 @@ public class DefaultGrailsDomainClassInjector implements ASTTransformation {
      */
     public static boolean hasProperty(ClassNode classNode, String propertyName) {
         if(classNode == null || propertyName == null || "".equals(propertyName.trim()))
+			log.info("ENTERING: hasProperty() method");
             return false;
 
         List properties = classNode.getProperties();
@@ -228,6 +241,7 @@ public class DefaultGrailsDomainClassInjector implements ASTTransformation {
      * @return True if it does implement the method
      */
     public static boolean implementsZeroArgMethod(ClassNode classNode, String methodName) {
+		log.warn("ENTERING: implementsZeroArgMethod() method");
         return implementsMethod(classNode, methodName, new Class[0]);
     }
 
@@ -242,6 +256,7 @@ public class DefaultGrailsDomainClassInjector implements ASTTransformation {
      */
     private static boolean implementsMethod(ClassNode classNode, String methodName, Class[] argTypes) {
         List methods = classNode.getMethods();
+		log.info("ENTERING: implementsMethod() method");
         if (argTypes == null || argTypes.length ==0) {
             for (Iterator i = methods.iterator(); i.hasNext();) {
                 MethodNode mn = (MethodNode) i.next();

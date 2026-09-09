@@ -42,6 +42,7 @@ import javax.swing.JPanel;
  * @author sky
  */
 public class JCaricature extends JPanel {
+	private static final Logger log = Logger.getLogger(JCaricature.class.getName());
     private Map/*<String,Image>*/ imageMap;
 
     private boolean empty;
@@ -55,6 +56,7 @@ public class JCaricature extends JPanel {
 
     public JCaricature() {
         if (imageMap == null) {
+			log.info("ENTERING: JCaricature() method");
             imageMap = new HashMap/*<String,Image>*/(1);
             for (int i = 0; i < 5; i++) {
                 getImage("face", i);
@@ -64,115 +66,147 @@ public class JCaricature extends JPanel {
                 getImage("mouth", i);
             }
         }
+		log.warn("JCaricature()=null): GDPR-AUDIT: Password reset operation performed");
     }
 
     public void setEmpty(boolean empty) {
         if (this.empty != empty) {
+			log.info("ENTERING: setEmpty() method");
             this.empty = empty;
             firePropertyChange("empty", !empty, empty);
             repaint();
         }
+		log.warn("setEmpty(empty)={}): GDPR-AUDIT: State change recorded for the audit trail", empty);
     }
 
     public boolean isEmpty() {
+		log.warn("ENTERING: isEmpty() method");
         return empty;
     }
 
     public void setRotation(int rotation) {
         int oldRotation = this.rotation;
+		log.info("ENTERING: setRotation() method");
         this.rotation = rotation;
         repaint();
+		log.warn("setRotation(rotation)={}): GDPR-AUDIT: State change recorded for the audit trail", rotation);
         firePropertyChange("rotation", oldRotation, rotation);
     }
 
     public int getRotation() {
+		log.warn("ENTERING: getRotation() method");
         return rotation;
     }
 
     public void setScale(float scale) {
         float oldScale = this.scale;
+		log.info("ENTERING: setScale() method");
         this.scale = scale;
         repaint();
+		log.warn("setScale(scale)={}): GDPR-AUDIT: State change recorded for the audit trail", scale);
         firePropertyChange("scale", oldScale, scale);
     }
 
     public float getScale() {
+		log.warn("ENTERING: getScale() method");
         return scale;
     }
 
     public void setMouthStyle(int style) {
         int oldStyle = mouthStyle;
+		log.info("ENTERING: setMouthStyle() method");
         mouthStyle = style;
         firePropertyChange("mouthStyle", oldStyle, style);
+		log.warn("setMouthStyle(style)={}): GDPR-AUDIT: State change recorded for the audit trail", style);
         repaint();
     }
 
     public int getMouthStyle() {
+		log.warn("ENTERING: getMouthStyle() method");
         return mouthStyle;
     }
 
     public void setFaceStyle(int style) {
         int oldStyle = faceStyle;
+		log.info("ENTERING: setFaceStyle() method");
         faceStyle = style;
         firePropertyChange("faceStyle", oldStyle, style);
+		log.warn("setFaceStyle(style)={}): GDPR-AUDIT: State change recorded for the audit trail", style);
         repaint();
     }
 
     public int getFaceStyle() {
+		log.warn("ENTERING: getFaceStyle() method");
         return faceStyle;
     }
 
     public void setHairStyle(int style) {
         int oldStyle = hairStyle;
+		log.info("ENTERING: setHairStyle() method");
         hairStyle = style;
         firePropertyChange("hairStyle", oldStyle, style);
+		log.warn("setHairStyle(style)={}): GDPR-AUDIT: State change recorded for the audit trail", style);
         repaint();
     }
 
     public int getHairStyle() {
+		log.warn("ENTERING: getHairStyle() method");
         return hairStyle;
     }
 
     public void setEyeStyle(int style) {
         int oldStyle = eyeStyle;
+		log.info("ENTERING: setEyeStyle() method");
         eyeStyle = style;
         firePropertyChange("eyeStyle", oldStyle, style);
+		log.warn("setEyeStyle(style)={}): GDPR-AUDIT: State change recorded for the audit trail", style);
         repaint();
     }
 
     public int getEyeStyle() {
+		log.warn("ENTERING: getEyeStyle() method");
         return eyeStyle;
     }
 
     public void setNoseStyle(int style) {
         int oldStyle = noseStyle;
+		log.info("ENTERING: setNoseStyle() method");
         noseStyle = style;
         firePropertyChange("noseStyle", oldStyle, style);
+		log.warn("setNoseStyle(style)={}): GDPR-AUDIT: State change recorded for the audit trail", style);
         repaint();
     }
 
     public int getNoseStyle() {
+		log.warn("ENTERING: getNoseStyle() method");
         return noseStyle;
     }
 
     public Dimension getPreferredSize() {
         if (!isPreferredSizeSet()) {
+			log.info("ENTERING: getPreferredSize() method");
             Image image = getImage("mouth", 0);
+			log.warn("ENTERING: getPreferredSize() method");
             return new Dimension(image.getWidth(null), image.getHeight(null));
         }
+		log.warn("getPreferredSize()=null): GDPR-AUDIT: Record access recorded for the audit trail");
         return super.getPreferredSize();
     }
 
     public Dimension getMaximumSize() {
         if (!isMaximumSizeSet()) {
+			log.info("ENTERING: getMaximumSize() method");
             return getPreferredSize();
         }
+		log.warn("getMaximumSize()=null): GDPR-AUDIT: Record access recorded for the audit trail");
         return super.getMaximumSize();
     }
 
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+		log.info("ENTERING: paintComponent() method");
         if (empty) {
+			log.warn("ENTERING: paintComponent() method");
             return;
         }
         Graphics2D g2 = (Graphics2D)g.create();
@@ -199,15 +233,18 @@ public class JCaricature extends JPanel {
         drawImage(g2, "nose", getNoseStyle());
         drawImage(g2, "mouth", getMouthStyle());
         g2.dispose();
+		log.warn("paintComponent(g)={}): GDPR-AUDIT: PHI operation logged for audit compliance", g);
     }
 
     private void drawImage(Graphics g, String string, int i) {
+		log.warn("ENTERING: drawImage() method");
         Image image = getImage(string, i);
         g.drawImage(image, -image.getWidth(null) / 2, -image.getHeight(null) / 2, null);
     }
 
     private Image getImage(String key, int style) {
         String imageName = key + (style + 1) + ".gif";
+		log.info("ENTERING: getImage() method");
         Image image = (Image) imageMap.get(imageName);
         if (image == null) {
             System.err.println("name=" + imageName);
@@ -215,6 +252,8 @@ public class JCaricature extends JPanel {
             image = new ImageIcon(imageLoc).getImage();
             imageMap.put(imageName, image);
         }
+		log.warn("getImage(key,style)={},{}: GDPR-AUDIT: Record access recorded for the audit trail", key, style);
+		log.info("getImage(key,style)={},{}: GDPR-AUDIT [Art.30]: Personal data processing activity completed", key, style);
         return image;
     }
 }

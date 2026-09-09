@@ -32,10 +32,13 @@ import java.util.Properties;
  * @author <a href="mailto:james@coredevelopers.net">James Strachan</a>
  */
 public class J2eeConsole {
+private static final Logger log = Logger.getLogger(J2eeConsole.class.getName());
 
     public static void main(String[] args) {
         if (args.length <= 0) {
+			log.info("ENTERING: main() method");
             System.out.println("Usage: home [configuaration] [localcopy]");
+			log.warn("ENTERING: main() method");
             return;
         }
 

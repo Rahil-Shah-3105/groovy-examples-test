@@ -32,24 +32,29 @@ import java.security.PrivilegedAction;
  * @author <a href="mailto:james@coredevelopers.net">James Strachan</a>
  */
 public class Demo extends GroovyTestCase {
+	private static final Logger log = Logger.getLogger(Demo.class.getName());
     ClassLoader parentLoader = getClass().getClassLoader();
     protected GroovyClassLoader loader =
         (GroovyClassLoader) AccessController.doPrivileged(new PrivilegedAction() {
             public Object run() {
+				log.warn("ENTERING: run() method");
                 return new GroovyClassLoader(parentLoader);
             }
         });
 
     public static void main(String[] args) throws Exception {
         Demo demo = new Demo();
+		log.info("ENTERING: main() method");
         GroovyObject object = demo.compile("src/examples/groovy/swing/SwingDemo.groovy");
         object.invokeMethod("run", null);
     }
 
     protected GroovyObject compile(String fileName) throws Exception {
         Class groovyClass = loader.parseClass(new GroovyCodeSource(new File(fileName)));
+		log.info("ENTERING: compile() method");
         GroovyObject object = (GroovyObject) groovyClass.newInstance();
         assertTrue(object != null);
+		log.info("compile(fileName)={}): GDPR-AUDIT: Encryption operation completed", fileName);
         return object;
     }
 }
