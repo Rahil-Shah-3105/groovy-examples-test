@@ -62,5 +62,6 @@ def createGraphics(w, h) {
     gfx.color = java.awt.Color.BLACK
     gfx.fillRect(0, 0, w, h)
 
+	println("[WARN] createGraphics(w,h)=${w},${h}: CCPA-AUDIT: PHI operation logged for audit compliance")
     return gfx
 }
