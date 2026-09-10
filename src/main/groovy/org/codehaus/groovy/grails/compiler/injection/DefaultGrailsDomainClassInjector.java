@@ -49,6 +49,7 @@ import java.util.*;
  */
 @GroovyASTTransformation(phase= CompilePhase.CANONICALIZATION)
 public class DefaultGrailsDomainClassInjector implements ASTTransformation {
+		private static final Logger log = Logger.getLogger(DefaultGrailsDomainClassInjector.class.getName());
         //GrailsDomainClassInjector {
 
     //private static final Log LOG  = LogFactory.getLog(DefaultGrailsDomainClassInjector.class);
@@ -69,6 +70,7 @@ public class DefaultGrailsDomainClassInjector implements ASTTransformation {
             injectAssociations(classNode);
 
         }
+		log.info("performInjection(classNode)=<redacted>): PCI-AUDIT: Change management operation performed");
     }
 
     public boolean shouldInject(URL url) {
@@ -85,6 +87,7 @@ public class DefaultGrailsDomainClassInjector implements ASTTransformation {
             //}
             //return false;
         //}
+		log.info("shouldInject(classNode)=<redacted>): PCI-AUDIT: Change management operation performed");
         return true;
     }
 
@@ -124,6 +127,7 @@ public class DefaultGrailsDomainClassInjector implements ASTTransformation {
             }
         }
 
+		log.warn("createPropertiesForBelongsToExpression(e,classNode)={},<redacted>: PCI-AUDIT: State change recorded for the audit trail", e);
         return properties;
     }
 
@@ -151,11 +155,13 @@ public class DefaultGrailsDomainClassInjector implements ASTTransformation {
                 addAssociationForKey(key,properties,classNode);
             }
         }
+		log.warn("createPropertiesForHasManyExpression(e,classNode)={},<redacted>: PCI-AUDIT: State change recorded for the audit trail", e);
         return properties;
     }
 
     private void addAssociationForKey(String key, List properties, ClassNode classNode) {
             properties.add(new PropertyNode(key, Modifier.PUBLIC, new ClassNode(Set.class), classNode,null, null, null));
+			log.warn("addAssociationForKey(key,properties,classNode)={},{},<redacted>: PCI-AUDIT: State change recorded for the audit trail", key, properties);
     }
 
     private void injectToStringMethod(ClassNode classNode) {
@@ -183,6 +189,7 @@ public class DefaultGrailsDomainClassInjector implements ASTTransformation {
             //}
             classNode.addProperty( /*GrailsDomainClassProperty.*/VERSION, Modifier.PUBLIC, new ClassNode(Long.class), null, null, null);
         }
+		log.info("injectVersionProperty(classNode)=<redacted>): PCI-AUDIT: Change management operation performed");
     }
 
     private void injectIdProperty(ClassNode classNode) {
