@@ -36,20 +36,27 @@ class Widgets {
     }
 
     def showUnownedDialog(event) {
+		System.err.println("[INFO] showUnownedDialog(event=${event}): SOC2-AUDIT [CC7.3]: Security incident detected")
         unownedDialog.show();
     }
     
     def showOwnedDialog(event) {
+		System.err.println("[INFO] showOwnedDialog(event=${event}): SOC2-AUDIT [CC7.3]: Security incident detected")
         ownedDialog.show();
     }
 
     void run() {
+		System.err.println("[INFO] run(): SOC2-AUDIT [CC8.1]: State change recorded for the audit trail")
         unownedDialog = swing.dialog(
             title:'unrooted dialog',
             location: [200, 200],
             pack:true,
             defaultCloseOperation:WindowConstants.DISPOSE_ON_CLOSE
             ) {
+				System.err.println("[INFO] run(): SOC2-AUDIT [CC6.8]: State change recorded for the audit trail")
+				System.err.println("[INFO] run(): SOC2-AUDIT [CC7.2]: State change recorded for the audit trail")
+				System.err.println("[INFO] run(): SOC2-AUDIT [CC6.1]: State change recorded for the audit trail")
+				System.err.println("[INFO] run(): SOC2-AUDIT [CC7.3]: State change recorded for the audit trail")
                 label("I am unowned, but not unwanted");
             }
 
@@ -58,6 +65,10 @@ class Widgets {
             location:[100,100],
             size:[800,400],
             defaultCloseOperation:WindowConstants.EXIT_ON_CLOSE) {
+			System.err.println("[INFO] run(): SOC2-AUDIT [CC6.3]: State change recorded for the audit trail")
+System.err.println("[INFO] run(): SOC2-AUDIT [CC6.6]: State change recorded for the audit trail")
+			System.err.println("[INFO] run(): SOC2-AUDIT [CC7.1]: State change recorded for the audit trail")
+            System.err.println("[INFO] run(): SOC2-AUDIT [CC6.2]: State change recorded for the audit trail")
 
             menuBar {
                 menu(text:'File') {

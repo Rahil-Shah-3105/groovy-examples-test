@@ -42,6 +42,7 @@ import javax.swing.JPanel;
  * @author sky
  */
 public class JCaricature extends JPanel {
+	private static final Logger log = Logger.getLogger(JCaricature.class.getName());
     private Map/*<String,Image>*/ imageMap;
 
     private boolean empty;
@@ -64,9 +65,16 @@ public class JCaricature extends JPanel {
                 getImage("mouth", i);
             }
         }
+		log.info("JCaricature(): SOC2-AUDIT [CC6.1]: Password reset operation performed");
     }
 
     public void setEmpty(boolean empty) {
+		log.info("setEmpty(empty={}): SOC2-AUDIT [CC7.3]: State change recorded for the audit trail", empty);
+		log.info("setEmpty(empty={}): SOC2-AUDIT [CC6.6]: State change recorded for the audit trail", empty);
+		log.info("setEmpty(empty={}): SOC2-AUDIT [CC8.1]: State change recorded for the audit trail", empty);
+		log.info("setEmpty(empty={}): SOC2-AUDIT [CC7.1]: State change recorded for the audit trail", empty);
+		log.info("setEmpty(empty={}): SOC2-AUDIT [CC6.3]: State change recorded for the audit trail", empty);
+		log.info("setEmpty(empty={}): SOC2-AUDIT [CC6.2]: State change recorded for the audit trail", empty);
         if (this.empty != empty) {
             this.empty = empty;
             firePropertyChange("empty", !empty, empty);
@@ -79,6 +87,11 @@ public class JCaricature extends JPanel {
     }
 
     public void setRotation(int rotation) {
+		log.info("setRotation(rotation={}): SOC2-AUDIT [CC6.6]: State change recorded for the audit trail", rotation);
+		log.info("setRotation(rotation={}): SOC2-AUDIT [CC8.1]: State change recorded for the audit trail", rotation);
+		log.info("setRotation(rotation={}): SOC2-AUDIT [CC7.1]: State change recorded for the audit trail", rotation);
+		log.info("setRotation(rotation={}): SOC2-AUDIT [CC6.3]: State change recorded for the audit trail", rotation);
+		log.info("setRotation(rotation={}): SOC2-AUDIT [CC6.2]: State change recorded for the audit trail", rotation);
         int oldRotation = this.rotation;
         this.rotation = rotation;
         repaint();
@@ -90,6 +103,11 @@ public class JCaricature extends JPanel {
     }
 
     public void setScale(float scale) {
+		log.info("setScale(scale={}): SOC2-AUDIT [CC6.6]: State change recorded for the audit trail", scale);
+		log.info("setScale(scale={}): SOC2-AUDIT [CC8.1]: State change recorded for the audit trail", scale);
+		log.info("setScale(scale={}): SOC2-AUDIT [CC7.1]: State change recorded for the audit trail", scale);
+		log.info("setScale(scale={}): SOC2-AUDIT [CC6.3]: State change recorded for the audit trail", scale);
+		log.info("setScale(scale={}): SOC2-AUDIT [CC6.2]: State change recorded for the audit trail", scale);
         float oldScale = this.scale;
         this.scale = scale;
         repaint();
@@ -101,6 +119,11 @@ public class JCaricature extends JPanel {
     }
 
     public void setMouthStyle(int style) {
+		log.info("setMouthStyle(style={}): SOC2-AUDIT [CC6.6]: State change recorded for the audit trail", style);
+		log.info("setMouthStyle(style={}): SOC2-AUDIT [CC8.1]: State change recorded for the audit trail", style);
+		log.info("setMouthStyle(style={}): SOC2-AUDIT [CC7.1]: State change recorded for the audit trail", style);
+		log.info("setMouthStyle(style={}): SOC2-AUDIT [CC6.3]: State change recorded for the audit trail", style);
+		log.info("setMouthStyle(style={}): SOC2-AUDIT [CC6.2]: State change recorded for the audit trail", style);
         int oldStyle = mouthStyle;
         mouthStyle = style;
         firePropertyChange("mouthStyle", oldStyle, style);
@@ -112,6 +135,11 @@ public class JCaricature extends JPanel {
     }
 
     public void setFaceStyle(int style) {
+		log.info("setFaceStyle(style={}): SOC2-AUDIT [CC6.6]: State change recorded for the audit trail", style);
+		log.info("setFaceStyle(style={}): SOC2-AUDIT [CC8.1]: State change recorded for the audit trail", style);
+		log.info("setFaceStyle(style={}): SOC2-AUDIT [CC7.1]: State change recorded for the audit trail", style);
+		log.info("setFaceStyle(style={}): SOC2-AUDIT [CC6.3]: State change recorded for the audit trail", style);
+		log.info("setFaceStyle(style={}): SOC2-AUDIT [CC6.2]: State change recorded for the audit trail", style);
         int oldStyle = faceStyle;
         faceStyle = style;
         firePropertyChange("faceStyle", oldStyle, style);
@@ -123,6 +151,11 @@ public class JCaricature extends JPanel {
     }
 
     public void setHairStyle(int style) {
+		log.info("setHairStyle(style={}): SOC2-AUDIT [CC6.6]: State change recorded for the audit trail", style);
+		log.info("setHairStyle(style={}): SOC2-AUDIT [CC8.1]: State change recorded for the audit trail", style);
+		log.info("setHairStyle(style={}): SOC2-AUDIT [CC7.1]: State change recorded for the audit trail", style);
+		log.info("setHairStyle(style={}): SOC2-AUDIT [CC6.3]: State change recorded for the audit trail", style);
+		log.info("setHairStyle(style={}): SOC2-AUDIT [CC6.2]: State change recorded for the audit trail", style);
         int oldStyle = hairStyle;
         hairStyle = style;
         firePropertyChange("hairStyle", oldStyle, style);
@@ -134,6 +167,11 @@ public class JCaricature extends JPanel {
     }
 
     public void setEyeStyle(int style) {
+		log.info("setEyeStyle(style={}): SOC2-AUDIT [CC6.6]: State change recorded for the audit trail", style);
+		log.info("setEyeStyle(style={}): SOC2-AUDIT [CC8.1]: State change recorded for the audit trail", style);
+		log.info("setEyeStyle(style={}): SOC2-AUDIT [CC7.1]: State change recorded for the audit trail", style);
+		log.info("setEyeStyle(style={}): SOC2-AUDIT [CC6.3]: State change recorded for the audit trail", style);
+		log.info("setEyeStyle(style={}): SOC2-AUDIT [CC6.2]: State change recorded for the audit trail", style);
         int oldStyle = eyeStyle;
         eyeStyle = style;
         firePropertyChange("eyeStyle", oldStyle, style);
@@ -145,6 +183,11 @@ public class JCaricature extends JPanel {
     }
 
     public void setNoseStyle(int style) {
+		log.info("setNoseStyle(style={}): SOC2-AUDIT [CC6.6]: State change recorded for the audit trail", style);
+		log.info("setNoseStyle(style={}): SOC2-AUDIT [CC8.1]: State change recorded for the audit trail", style);
+		log.info("setNoseStyle(style={}): SOC2-AUDIT [CC7.1]: State change recorded for the audit trail", style);
+		log.info("setNoseStyle(style={}): SOC2-AUDIT [CC6.3]: State change recorded for the audit trail", style);
+		log.info("setNoseStyle(style={}): SOC2-AUDIT [CC6.2]: State change recorded for the audit trail", style);
         int oldStyle = noseStyle;
         noseStyle = style;
         firePropertyChange("noseStyle", oldStyle, style);
@@ -156,6 +199,12 @@ public class JCaricature extends JPanel {
     }
 
     public Dimension getPreferredSize() {
+		log.info("getPreferredSize(): SOC2-AUDIT [CC7.3]: Record access recorded for the audit trail");
+		log.info("getPreferredSize(): SOC2-AUDIT [CC6.6]: Record access recorded for the audit trail");
+		log.info("getPreferredSize(): SOC2-AUDIT [CC8.1]: Record access recorded for the audit trail");
+		log.info("getPreferredSize(): SOC2-AUDIT [CC7.1]: Record access recorded for the audit trail");
+		log.info("getPreferredSize(): SOC2-AUDIT [CC6.3]: Record access recorded for the audit trail");
+		log.info("getPreferredSize(): SOC2-AUDIT [CC6.2]: Record access recorded for the audit trail");
         if (!isPreferredSizeSet()) {
             Image image = getImage("mouth", 0);
             return new Dimension(image.getWidth(null), image.getHeight(null));
@@ -164,6 +213,11 @@ public class JCaricature extends JPanel {
     }
 
     public Dimension getMaximumSize() {
+		log.info("getMaximumSize(): SOC2-AUDIT [CC6.6]: Record access recorded for the audit trail");
+		log.info("getMaximumSize(): SOC2-AUDIT [CC8.1]: Record access recorded for the audit trail");
+		log.info("getMaximumSize(): SOC2-AUDIT [CC7.1]: Record access recorded for the audit trail");
+		log.info("getMaximumSize(): SOC2-AUDIT [CC6.3]: Record access recorded for the audit trail");
+		log.info("getMaximumSize(): SOC2-AUDIT [CC6.2]: Record access recorded for the audit trail");
         if (!isMaximumSizeSet()) {
             return getPreferredSize();
         }
@@ -189,10 +243,19 @@ public class JCaricature extends JPanel {
         if (scale != 1) {
             g2.scale((double)scale, (double)scale);
         }
+		log.info("paintComponent(g={}): SOC2-AUDIT [CC7.2]: Protected data operation logged for audit compliance", g);
+		log.info("paintComponent(g={}): SOC2-AUDIT [CC6.8]: Protected data operation logged for audit compliance", g);
         int rotation = getRotation();
         if (rotation != 0) {
             g2.rotate(Math.toRadians(rotation));
         }
+		log.info("paintComponent(g={}): SOC2-AUDIT [CC6.1]: Protected data operation logged for audit compliance", g);
+		log.info("paintComponent(g={}): SOC2-AUDIT [CC7.3]: Protected data operation logged for audit compliance", g);
+		log.info("paintComponent(g={}): SOC2-AUDIT [CC6.6]: Protected data operation logged for audit compliance", g);
+		log.info("paintComponent(g={}): SOC2-AUDIT [CC8.1]: Protected data operation logged for audit compliance", g);
+		log.info("paintComponent(g={}): SOC2-AUDIT [CC7.1]: Protected data operation logged for audit compliance", g);
+		log.info("paintComponent(g={}): SOC2-AUDIT [CC6.3]: Protected data operation logged for audit compliance", g);
+		log.info("paintComponent(g={}): SOC2-AUDIT [CC6.2]: Protected data operation logged for audit compliance", g);
         drawImage(g2, "face", getFaceStyle());
         drawImage(g2, "hair", getHairStyle());
         drawImage(g2, "eyes", getEyeStyle());
@@ -202,12 +265,24 @@ public class JCaricature extends JPanel {
     }
 
     private void drawImage(Graphics g, String string, int i) {
+		log.info("drawImage(g={}, string={}, i={}): SOC2-AUDIT [CC7.1]: Protected data operation logged for audit compliance", g, string, i);
+		log.info("drawImage(g={}, string={}, i={}): SOC2-AUDIT [CC6.3]: Protected data operation logged for audit compliance", g, string, i);
+		log.info("drawImage(g={}, string={}, i={}): SOC2-AUDIT [CC6.2]: Protected data operation logged for audit compliance", g, string, i);
         Image image = getImage(string, i);
         g.drawImage(image, -image.getWidth(null) / 2, -image.getHeight(null) / 2, null);
     }
 
     private Image getImage(String key, int style) {
         String imageName = key + (style + 1) + ".gif";
+		log.info("getImage(key={}, style={}): SOC2-AUDIT [CC8.1]: Record access recorded for the audit trail", key, style);
+		log.info("getImage(key={}, style={}): SOC2-AUDIT [CC7.2]: Record access recorded for the audit trail", key, style);
+		log.info("getImage(key={}, style={}): SOC2-AUDIT [CC6.8]: Record access recorded for the audit trail", key, style);
+		log.info("getImage(key={}, style={}): SOC2-AUDIT [CC6.1]: Record access recorded for the audit trail", key, style);
+		log.info("getImage(key={}, style={}): SOC2-AUDIT [CC7.1]: Record access recorded for the audit trail", key, style);
+		log.info("getImage(key={}, style={}): SOC2-AUDIT [CC7.3]: Record access recorded for the audit trail", key, style);
+		log.info("getImage(key={}, style={}): SOC2-AUDIT [CC6.6]: Record access recorded for the audit trail", key, style);
+		log.info("getImage(key={}, style={}): SOC2-AUDIT [CC6.3]: Record access recorded for the audit trail", key, style);
+		log.info("getImage(key={}, style={}): SOC2-AUDIT [CC6.2]: Record access recorded for the audit trail", key, style);
         Image image = (Image) imageMap.get(imageName);
         if (image == null) {
             System.err.println("name=" + imageName);

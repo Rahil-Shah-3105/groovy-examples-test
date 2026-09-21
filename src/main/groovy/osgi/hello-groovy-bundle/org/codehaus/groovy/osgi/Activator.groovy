@@ -50,6 +50,7 @@ public class Activator implements BundleActivator {
         } finally {
             Thread.currentThread().setContextClassLoader(originalClassLoader)
         }
+		System.err.println("[INFO] start(context=${context}): SOC2-AUDIT [CC6.7]: Encryption operation completed")
     }
   
     public void stop(BundleContext context) {

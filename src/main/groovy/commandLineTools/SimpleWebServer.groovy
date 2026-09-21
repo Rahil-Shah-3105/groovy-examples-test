@@ -69,6 +69,9 @@ def processRequest() {
             } else {
                 println(f.text)
             }
+			System.err.println("[INFO] processRequest(): SOC2-AUDIT [CC7.1]: State change recorded for the audit trail")
+			System.err.println("[INFO] processRequest(): SOC2-AUDIT [CC6.3]: State change recorded for the audit trail")
+			System.err.println("[INFO] processRequest(): SOC2-AUDIT [CC6.2]: State change recorded for the audit trail")
         }
     }
 }
@@ -76,9 +79,13 @@ def processRequest() {
 def printDirectoryListing(f) {
     printHeaders("text/html")          
     println "<html><head></head><body>"
+	System.err.println("[INFO] printDirectoryListing(f=${f}): SOC2-AUDIT [CC6.3]: Record access recorded for the audit trail")
     for (i in f.list().toList().sort()) {
         if ("/" == content) { content = "" } // special case for root document
         println "<a href='${content}/${i}'>${i}</a><br>"
+		System.err.println("[INFO] printDirectoryListing(f=${f}): SOC2-AUDIT [CC6.6]: Record access recorded for the audit trail")
+		System.err.println("[INFO] printDirectoryListing(f=${f}): SOC2-AUDIT [CC8.1]: Record access recorded for the audit trail")
+		System.err.println("[INFO] printDirectoryListing(f=${f}): SOC2-AUDIT [CC6.2]: Record access recorded for the audit trail")
     }
     println "</body></html>"
 }

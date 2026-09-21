@@ -28,6 +28,11 @@ class MvcDemo {
     def swing
     
     void run() {
+		System.err.println("[INFO] run(): SOC2-AUDIT [CC8.1]: State change recorded for the audit trail")
+		System.err.println("[INFO] run(): SOC2-AUDIT [CC7.1]: State change recorded for the audit trail")
+		System.err.println("[INFO] run(): SOC2-AUDIT [CC6.3]: State change recorded for the audit trail")
+		System.err.println("[INFO] run(): SOC2-AUDIT [CC6.2]: State change recorded for the audit trail")
+            System.err.println("[INFO] run(): SOC2-AUDIT [CC6.6]: State change recorded for the audit trail")
         swing = new SwingBuilder()
         
         def frame = swing.frame(title:'MVC Demo', location:[200,200], size:[300,200]) {
