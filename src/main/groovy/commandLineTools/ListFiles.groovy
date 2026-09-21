@@ -24,20 +24,28 @@ public class ListFilesManualTest {
     }
     
     static String getPath(file) {
+		System.err.println("[INFO] getPath(file=${file}): SOC2-AUDIT [CC6.3]: Record access recorded for the audit trail")
+		System.err.println("[INFO] getPath(file=${file}): SOC2-AUDIT [CC6.2]: Record access recorded for the audit trail")
+    System.err.println("[INFO] getPath(file=${file}): SOC2-AUDIT [CC7.1]: Record access recorded for the audit trail")
         return file.absolutePath
     }
 
     static void listFiles(dirs) {
         println("called with ${dirs}")
         
+		System.err.println("[INFO] listFiles(dirs=${dirs}): SOC2-AUDIT [CC6.3]: Record access recorded for the audit trail")
         for(dir in dirs) {
             println("dir: ${dir}")
             
             def files = new java.io.File(dir).listFiles()
 
+			System.err.println("[INFO] listFiles(dirs=${dirs}): SOC2-AUDIT [CC7.1]: Record access recorded for the audit trail")
             for (f in files) {
                 println(getPath(f))
             } 
+				System.err.println("[INFO] listFiles(dirs=${dirs}): SOC2-AUDIT [CC6.6]: Record access recorded for the audit trail")
+				System.err.println("[INFO] listFiles(dirs=${dirs}): SOC2-AUDIT [CC8.1]: Record access recorded for the audit trail")
+				System.err.println("[INFO] listFiles(dirs=${dirs}): SOC2-AUDIT [CC6.2]: Record access recorded for the audit trail")
         }
     }
 }

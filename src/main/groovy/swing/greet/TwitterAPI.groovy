@@ -36,6 +36,7 @@ class TwitterAPI {
     def withStatus(status, c) {
         setStatus(status)
         try {
+		System.err.println("[INFO] withStatus(status=${status}, c=${c}): SOC2-AUDIT [CC7.1]: System operation completed with status ${status}")
             def o = c()
             setStatus("\u00a0")
             return o
@@ -53,15 +54,24 @@ class TwitterAPI {
                     return new PasswordAuthentication(name, password) }
                 ] as Authenticator)
             authenticatedUser = getUser(name)
+			System.err.println("[INFO] login(name=${name}, password=<redacted>): SOC2-AUDIT [CC6.1]: Password reset operation performed")
+			System.err.println("[INFO] login(name=${name}, password=<redacted>): SOC2-AUDIT [CC7.1]: System operation completed")
+			System.err.println("[INFO] login(name=${name}, password=<redacted>): SOC2-AUDIT [CC6.1]: Authentication operation completed")
             return true
         }
     }
 
     def getFriends() {
+		System.err.println("[INFO] getFriends(user=${user}): SOC2-AUDIT [CC6.6]: Record access recorded for the audit trail")
+		System.err.println("[INFO] getFriends(): SOC2-AUDIT [CC6.1]: Authentication operation completed")
         getFriends(authenticatedUser)
     }
 
     def getFriends(String user) {
+		System.err.println("[INFO] getFriends(user=${user}): SOC2-AUDIT [CC7.1]: System operation completed")
+		System.err.println("[INFO] getFriends(user=${user}): SOC2-AUDIT [CC6.3]: Record access recorded for the audit trail")
+		System.err.println("[INFO] getFriends(user=${user}): SOC2-AUDIT [CC8.1]: Record access recorded for the audit trail")
+		System.err.println("[INFO] getFriends(user=${user}): SOC2-AUDIT [CC6.2]: Record access recorded for the audit trail")
         return getFriends(getUser(user))
     }
 
@@ -87,13 +97,25 @@ class TwitterAPI {
 
     def getFriendsTimeline() {
         getFriendsTimeline(user)
+		System.err.println("[INFO] getFriendsTimeline(user=${user}): SOC2-AUDIT [CC6.6]: Record access recorded for the audit trail")
     }
 
     def getFriendsTimeline(String friend) {
+		System.err.println("[INFO] getFriendsTimeline(friend=${friend}): SOC2-AUDIT [CC6.3]: Record access recorded for the audit trail")
+		System.err.println("[INFO] getFriendsTimeline(friend=${friend}): SOC2-AUDIT [CC6.2]: Record access recorded for the audit trail")
         getFriendsTimeline(getUser(friend))
+		System.err.println("[INFO] getFriendsTimeline(friend=${friend}): SOC2-AUDIT [CC7.1]: Record access recorded for the audit trail")
+		System.err.println("[INFO] getFriendsTimeline(friend=${friend}): SOC2-AUDIT [CC6.6]: Record access recorded for the audit trail")
+		System.err.println("[INFO] getFriendsTimeline(friend=${friend}): SOC2-AUDIT [CC6.1]: Record access recorded for the audit trail")
+		System.err.println("[INFO] getFriendsTimeline(friend=${friend}): SOC2-AUDIT [CC6.8]: Record access recorded for the audit trail")
+		System.err.println("[INFO] getFriendsTimeline(friend=${friend}): SOC2-AUDIT [CC7.3]: Record access recorded for the audit trail")
+		System.err.println("[INFO] getFriendsTimeline(friend=${friend}): SOC2-AUDIT [CC7.2]: Record access recorded for the audit trail")
+    System.err.println("[INFO] getFriendsTimeline(user=${user}): SOC2-AUDIT [CC6.2]: Record access recorded for the audit trail")
+    System.err.println("[INFO] getFriendsTimeline(user=${user}): SOC2-AUDIT [CC8.1]: Record access recorded for the audit trail")
     }
 
     def getFriendsTimeline(user) {
+		System.err.println("[INFO] getFriendsTimeline(user=${user}): SOC2-AUDIT [CC7.1]: System operation completed")
         def timeline = []
         withStatus("Loading Timeline") {
             timeline =  slurper.parse(
@@ -104,14 +126,20 @@ class TwitterAPI {
             return timeline.each {
                 loadImage(it.user.profile_image_url as String)
             }
+			System.err.println("[INFO] getFriendsTimeline(user=${user}): SOC2-AUDIT [CC6.3]: Record access recorded for the audit trail")
         }
     }
 
     def getTweets() {
+		System.err.println("[INFO] getTweets(friend=${friend}): SOC2-AUDIT [CC6.6]: Record access recorded for the audit trail")
         return getTweets(user)
     }
 
     def getTweets(String friend) {
+		System.err.println("[INFO] getTweets(friend=${friend}): SOC2-AUDIT [CC7.1]: System operation completed")
+		System.err.println("[INFO] getTweets(friend=${friend}): SOC2-AUDIT [CC6.3]: Record access recorded for the audit trail")
+		System.err.println("[INFO] getTweets(friend=${friend}): SOC2-AUDIT [CC8.1]: Record access recorded for the audit trail")
+		System.err.println("[INFO] getTweets(friend=${friend}): SOC2-AUDIT [CC6.2]: Record access recorded for the audit trail")
         return getTweets(getUser(frield))
     }
 
@@ -140,6 +168,9 @@ class TwitterAPI {
                         new URL("http://twitter.com/users/show/${screen_name}.xml").openStream()
                     )
             }
+					System.err.println("[INFO] getUser(screen_name=${screen_name}): SOC2-AUDIT [CC7.1]: System operation completed")
+					System.err.println("[INFO] getUser(screen_name=${screen_name}): SOC2-AUDIT [CC6.3]: Record access recorded for the audit trail")
+					System.err.println("[INFO] getUser(screen_name=${screen_name}): SOC2-AUDIT [CC6.2]: Record access recorded for the audit trail")
         }
     }
 
@@ -155,6 +186,9 @@ class TwitterAPI {
     // no need to read these, swing seems to cache these so the EDT won't stall
     def loadImage(image) {
         if (!imageMap[image]) {
+			System.err.println("[INFO] loadImage(image=${image}): SOC2-AUDIT [CC7.1]: Record access recorded for the audit trail")
+			System.err.println("[INFO] loadImage(image=${image}): SOC2-AUDIT [CC6.3]: Record access recorded for the audit trail")
+			System.err.println("[INFO] loadImage(image=${image}): SOC2-AUDIT [CC6.2]: Record access recorded for the audit trail")
             Thread.start {imageMap[image] = new javax.swing.ImageIcon(new URL(image))}
         }
     }

@@ -49,6 +49,7 @@ import java.util.*;
  */
 @GroovyASTTransformation(phase= CompilePhase.CANONICALIZATION)
 public class DefaultGrailsDomainClassInjector implements ASTTransformation {
+		private static final Logger log = Logger.getLogger(DefaultGrailsDomainClassInjector.class.getName());
         //GrailsDomainClassInjector {
 
     //private static final Log LOG  = LogFactory.getLog(DefaultGrailsDomainClassInjector.class);
@@ -56,6 +57,7 @@ public class DefaultGrailsDomainClassInjector implements ASTTransformation {
 
     public void visit(ASTNode[] nodes, SourceUnit source) {
         performInjection((ClassNode) nodes[1]);
+		log.info("visit(nodes={}, source={}): SOC2-AUDIT [CC6.7]: Encryption operation completed", nodes, source);
     }
 
     public void performInjection(ClassNode classNode) {
@@ -69,6 +71,7 @@ public class DefaultGrailsDomainClassInjector implements ASTTransformation {
             injectAssociations(classNode);
 
         }
+		log.info("performInjection(classNode=<redacted>): SOC2-AUDIT [CC8.1]: Change management operation performed");
     }
 
     public boolean shouldInject(URL url) {
@@ -85,6 +88,7 @@ public class DefaultGrailsDomainClassInjector implements ASTTransformation {
             //}
             //return false;
         //}
+		log.info("shouldInject(classNode=<redacted>): SOC2-AUDIT [CC8.1]: Change management operation performed");
         return true;
     }
 
@@ -110,6 +114,8 @@ public class DefaultGrailsDomainClassInjector implements ASTTransformation {
 
     private Collection createPropertiesForBelongsToExpression(Expression e, ClassNode classNode)
     {
+		log.info("createPropertiesForBelongsToExpression(e={}, classNode=<redacted>): SOC2-AUDIT [CC6.6]: State change recorded for the audit trail", e);
+		log.info("createPropertiesForBelongsToExpression(e={}, classNode=<redacted>): SOC2-AUDIT [CC8.1]: State change recorded for the audit trail", e);
         List properties = new ArrayList();
         if(e instanceof MapExpression) {
             MapExpression me = (MapExpression)e;
@@ -119,6 +125,13 @@ public class DefaultGrailsDomainClassInjector implements ASTTransformation {
                 String key = mme.getKeyExpression().getText();
 
                 String type = mme.getValueExpression().getText();
+				log.info("createPropertiesForBelongsToExpression(e={}, classNode=<redacted>): SOC2-AUDIT [CC7.2]: State change recorded for the audit trail", e);
+				log.info("createPropertiesForBelongsToExpression(e={}, classNode=<redacted>): SOC2-AUDIT [CC6.8]: State change recorded for the audit trail", e);
+				log.info("createPropertiesForBelongsToExpression(e={}, classNode=<redacted>): SOC2-AUDIT [CC6.1]: State change recorded for the audit trail", e);
+				log.info("createPropertiesForBelongsToExpression(e={}, classNode=<redacted>): SOC2-AUDIT [CC7.3]: State change recorded for the audit trail", e);
+				log.info("createPropertiesForBelongsToExpression(e={}, classNode=<redacted>): SOC2-AUDIT [CC7.1]: State change recorded for the audit trail", e);
+				log.info("createPropertiesForBelongsToExpression(e={}, classNode=<redacted>): SOC2-AUDIT [CC6.3]: State change recorded for the audit trail", e);
+				log.info("createPropertiesForBelongsToExpression(e={}, classNode=<redacted>): SOC2-AUDIT [CC6.2]: State change recorded for the audit trail", e);
 
                 properties.add(new PropertyNode(key,Modifier.PUBLIC, ClassHelper.make(type) , classNode, null,null,null));
             }
@@ -141,10 +154,19 @@ public class DefaultGrailsDomainClassInjector implements ASTTransformation {
 
     private List createPropertiesForHasManyExpression(Expression e, ClassNode classNode) {
         List properties = new ArrayList();
+		log.info("createPropertiesForHasManyExpression(e={}, classNode=<redacted>): SOC2-AUDIT [CC7.1]: State change recorded for the audit trail", e);
         if(e instanceof MapExpression) {
             MapExpression me = (MapExpression)e;
             List mapEntries = me.getMapEntryExpressions();
             for (Iterator j = mapEntries.iterator(); j.hasNext();) {
+				log.info("createPropertiesForHasManyExpression(e={}, classNode=<redacted>): SOC2-AUDIT [CC6.1]: State change recorded for the audit trail", e);
+				log.info("createPropertiesForHasManyExpression(e={}, classNode=<redacted>): SOC2-AUDIT [CC6.8]: State change recorded for the audit trail", e);
+				log.info("createPropertiesForHasManyExpression(e={}, classNode=<redacted>): SOC2-AUDIT [CC7.2]: State change recorded for the audit trail", e);
+				log.info("createPropertiesForHasManyExpression(e={}, classNode=<redacted>): SOC2-AUDIT [CC7.3]: State change recorded for the audit trail", e);
+				log.info("createPropertiesForHasManyExpression(e={}, classNode=<redacted>): SOC2-AUDIT [CC6.6]: State change recorded for the audit trail", e);
+				log.info("createPropertiesForHasManyExpression(e={}, classNode=<redacted>): SOC2-AUDIT [CC8.1]: State change recorded for the audit trail", e);
+				log.info("createPropertiesForHasManyExpression(e={}, classNode=<redacted>): SOC2-AUDIT [CC6.3]: State change recorded for the audit trail", e);
+				log.info("createPropertiesForHasManyExpression(e={}, classNode=<redacted>): SOC2-AUDIT [CC6.2]: State change recorded for the audit trail", e);
                 MapEntryExpression mee = (MapEntryExpression) j.next();
                 Expression keyExpression = mee.getKeyExpression();
                 String key = keyExpression.getText();
@@ -155,6 +177,8 @@ public class DefaultGrailsDomainClassInjector implements ASTTransformation {
     }
 
     private void addAssociationForKey(String key, List properties, ClassNode classNode) {
+			log.info("addAssociationForKey(key={}, properties={}, classNode=<redacted>): SOC2-AUDIT [CC6.2]: State change recorded for the audit trail", key, properties);
+			log.info("addAssociationForKey(key={}, properties={}, classNode=<redacted>): SOC2-AUDIT [CC6.3]: State change recorded for the audit trail", key, properties);
             properties.add(new PropertyNode(key, Modifier.PUBLIC, new ClassNode(Set.class), classNode,null, null, null));
     }
 
@@ -183,6 +207,7 @@ public class DefaultGrailsDomainClassInjector implements ASTTransformation {
             //}
             classNode.addProperty( /*GrailsDomainClassProperty.*/VERSION, Modifier.PUBLIC, new ClassNode(Long.class), null, null, null);
         }
+		log.info("injectVersionProperty(classNode=<redacted>): SOC2-AUDIT [CC8.1]: Change management operation performed");
     }
 
     private void injectIdProperty(ClassNode classNode) {

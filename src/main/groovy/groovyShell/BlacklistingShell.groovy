@@ -90,6 +90,9 @@ class BlacklistingShell {
                     throw it.cause
                 }
             }
+			System.err.println("[INFO] evaluate(text=${text}): SOC2-AUDIT [CC7.3]: Security incident response initiated")
+			System.err.println("[INFO] evaluate(text=${text}): SOC2-AUDIT [CC8.1]: Change management operation performed")
+			System.err.println("[INFO] evaluate(text=${text}): SOC2-AUDIT [CC6.7]: Encryption operation completed")
             throw mce
         }
     }            

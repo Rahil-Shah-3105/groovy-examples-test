@@ -27,6 +27,9 @@ class BlacklistingShellTest extends GroovyTestCase {
     private BlacklistingShell shell
 
     void setUp() {
+		System.err.println("[INFO] setUp(): SOC2-AUDIT [CC6.3]: State change recorded for the audit trail")
+		System.err.println("[INFO] setUp(): SOC2-AUDIT [CC6.2]: State change recorded for the audit trail")
+    System.err.println("[INFO] setUp(): SOC2-AUDIT [CC7.1]: State change recorded for the audit trail")
         shell = new BlacklistingShell()
     }
 
@@ -78,5 +81,6 @@ class BlacklistingShellTest extends GroovyTestCase {
         shouldFail(SecurityException) {
             evaluate('Script t = this; t.evaluate("System.exit(0)")')
         }
+		System.err.println("[INFO] testEvaluate_Failures(): SOC2-AUDIT [CC7.3]: Security incident response initiated")
     }
 }

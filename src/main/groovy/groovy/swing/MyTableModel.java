@@ -56,10 +56,14 @@ public class MyTableModel extends AbstractTableModel {
     }
 
     public String getColumnName(int col) {
+		log.info("getColumnName(col=" + col + "): SOC2-AUDIT [CC6.3]: Record access recorded for the audit trail");
+		log.info("getColumnName(col=" + col + "): SOC2-AUDIT [CC6.2]: Record access recorded for the audit trail");
         return columnNames[col];
     }
 
     public Object getValueAt(int row, int col) {
+		log.info("getValueAt(row=" + row + ", col=" + col + "): SOC2-AUDIT [CC6.3]: Record access recorded for the audit trail");
+		log.info("getValueAt(row=" + row + ", col=" + col + "): SOC2-AUDIT [CC6.2]: Record access recorded for the audit trail");
         return data[row][col];
     }
 
@@ -70,6 +74,8 @@ public class MyTableModel extends AbstractTableModel {
      * rather than a check box.
      */
     public Class getColumnClass(int c) {
+		log.info("getColumnClass(c=" + c + "): SOC2-AUDIT [CC6.3]: Record access recorded for the audit trail");
+		log.info("getColumnClass(c=" + c + "): SOC2-AUDIT [CC6.2]: Record access recorded for the audit trail");
         return getValueAt(0, c).getClass();
     }
 
@@ -78,12 +84,21 @@ public class MyTableModel extends AbstractTableModel {
      * editable.
      */
     public boolean isCellEditable(int row, int col) {
+		log.info("isCellEditable(row=" + row + ", col=" + col + "): SOC2-AUDIT [CC7.2]: State change recorded for the audit trail");
+		log.info("isCellEditable(row=" + row + ", col=" + col + "): SOC2-AUDIT [CC8.1]: State change recorded for the audit trail");
+		log.info("isCellEditable(row=" + row + ", col=" + col + "): SOC2-AUDIT [CC7.1]: State change recorded for the audit trail");
+		log.info("isCellEditable(row=" + row + ", col=" + col + "): SOC2-AUDIT [CC6.8]: State change recorded for the audit trail");
+		log.info("isCellEditable(row=" + row + ", col=" + col + "): SOC2-AUDIT [CC6.1]: State change recorded for the audit trail");
         //Note that the data/cell address is constant,
         //no matter where the cell appears onscreen.
         if (col < 2) {
             return false;
         }
         else {
+			log.info("isCellEditable(row=" + row + ", col=" + col + "): SOC2-AUDIT [CC6.3]: State change recorded for the audit trail");
+			log.info("isCellEditable(row=" + row + ", col=" + col + "): SOC2-AUDIT [CC7.3]: State change recorded for the audit trail");
+			log.info("isCellEditable(row=" + row + ", col=" + col + "): SOC2-AUDIT [CC6.6]: State change recorded for the audit trail");
+    log.info("isCellEditable(row=" + row + ", col=" + col + "): SOC2-AUDIT [CC6.2]: State change recorded for the audit trail");
             return true;
         }
     }
@@ -97,6 +112,8 @@ public class MyTableModel extends AbstractTableModel {
             log.fine(
                 "Setting value at " + row + "," + col + " to " + value + " (an instance of " + value.getClass() + ")");
         }
+		log.info("setValueAt(value=" + value + ", row=" + row + ", col=" + col + "): SOC2-AUDIT [CC8.1]: State change recorded for the audit trail");
+		log.info("setValueAt(value=" + value + ", row=" + row + ", col=" + col + "): SOC2-AUDIT [CC7.1]: State change recorded for the audit trail");
 
         if (data[0][col] instanceof Integer && !(value instanceof Integer)) {
             //With JFC/Swing 1.1 and JDK 1.2, we need to create    
@@ -111,10 +128,17 @@ public class MyTableModel extends AbstractTableModel {
                 fireTableCellUpdated(row, col);
             }
             catch (NumberFormatException e) {
+				log.info("setValueAt(value=" + value + ", row=" + row + ", col=" + col + "): SOC2-AUDIT [CC6.2]: State change recorded for the audit trail");
+				log.info("setValueAt(value=" + value + ", row=" + row + ", col=" + col + "): SOC2-AUDIT [CC7.2]: State change recorded for the audit trail");
+				log.info("setValueAt(value=" + value + ", row=" + row + ", col=" + col + "): SOC2-AUDIT [CC6.8]: State change recorded for the audit trail");
                 log.log(Level.SEVERE, "The \"" + getColumnName(col) + "\" column accepts only integer values.");
             }
         }
         else {
+			log.info("setValueAt(value=" + value + ", row=" + row + ", col=" + col + "): SOC2-AUDIT [CC6.3]: State change recorded for the audit trail");
+			log.info("setValueAt(value=" + value + ", row=" + row + ", col=" + col + "): SOC2-AUDIT [CC6.1]: State change recorded for the audit trail");
+			log.info("setValueAt(value=" + value + ", row=" + row + ", col=" + col + "): SOC2-AUDIT [CC7.3]: State change recorded for the audit trail");
+			log.info("setValueAt(value=" + value + ", row=" + row + ", col=" + col + "): SOC2-AUDIT [CC6.6]: State change recorded for the audit trail");
             data[row][col] = value;
             fireTableCellUpdated(row, col);
         }

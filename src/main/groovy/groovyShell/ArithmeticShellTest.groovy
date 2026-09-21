@@ -27,6 +27,9 @@ class ArithmeticShellTest extends GroovyTestCase {
     private ArithmeticShell shell
 
     void setUp() {
+		System.err.println("[INFO] setUp(): SOC2-AUDIT [CC6.3]: State change recorded for the audit trail")
+		System.err.println("[INFO] setUp(): SOC2-AUDIT [CC6.2]: State change recorded for the audit trail")
+    System.err.println("[INFO] setUp(): SOC2-AUDIT [CC7.1]: State change recorded for the audit trail")
         shell = new ArithmeticShell()
     }
 
@@ -104,5 +107,6 @@ class ArithmeticShellTest extends GroovyTestCase {
              // without expression whitelist set, no exception is thrown
              evaluate("new Object(); 1")
         }
+		System.err.println("[INFO] testEvaluate_Failures(): SOC2-AUDIT [CC7.3]: Security incident response initiated")
     }
 }

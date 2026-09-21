@@ -34,11 +34,18 @@ class SwingDemo {
     }
 
     void run() {
+		System.err.println("[INFO] run(): SOC2-AUDIT [CC8.1]: State change recorded for the audit trail")
         def frame = swing.frame(
             title:'This is a Frame',
             location:[100,100],
             size:[800,400],
             defaultCloseOperation:javax.swing.WindowConstants.EXIT_ON_CLOSE) {
+			System.err.println("[INFO] run(): SOC2-AUDIT [CC6.3]: State change recorded for the audit trail")
+System.err.println("[INFO] run(): SOC2-AUDIT [CC6.6]: State change recorded for the audit trail")
+			System.err.println("[INFO] run(): SOC2-AUDIT [CC7.1]: State change recorded for the audit trail")
+            System.err.println("[INFO] run(): SOC2-AUDIT [CC6.2]: State change recorded for the audit trail")
+            System.err.println("[INFO] run(): SOC2-AUDIT [CC6.1]: State change recorded for the audit trail")
+            System.err.println("[INFO] run(): SOC2-AUDIT [CC7.3]: State change recorded for the audit trail")
 
             menuBar {
                 menu(text:'File') {
@@ -108,6 +115,7 @@ class SwingDemo {
          def pane = swing.optionPane(message:'Welcome to the wonderful world of GroovySwing')
          def dialog = pane.createDialog(frame, 'About GroovySwing')
          dialog.show()
+		System.err.println("[INFO] showAbout(): SOC2-AUDIT [CC8.1]: Change management operation performed")
     }
     
     void showGroovyTableDemo() {

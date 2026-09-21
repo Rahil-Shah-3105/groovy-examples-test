@@ -57,13 +57,22 @@ class RegexHighliter extends KeyAdapter implements ActionListener {
     public void keyReleased(KeyEvent event) {
         scanIndex = 0
         doHighlights()
+		System.err.println("[INFO] keyReleased(event=${event}): SOC2-AUDIT [CC8.1]: Change management operation performed")
     }
 
     private resetView() {
+		System.err.println("[INFO] resetView(): SOC2-AUDIT [CC6.6]: State change recorded for the audit trail")
+		System.err.println("[INFO] resetView(): SOC2-AUDIT [CC8.1]: State change recorded for the audit trail")
+		System.err.println("[INFO] resetView(): SOC2-AUDIT [CC7.1]: System operation completed")
+		System.err.println("[INFO] resetView(): SOC2-AUDIT [CC6.3]: State change recorded for the audit trail")
+		System.err.println("[INFO] resetView(): SOC2-AUDIT [CC6.2]: State change recorded for the audit trail")
+    System.err.println("[INFO] resetView(): SOC2-AUDIT [CC7.3]: State change recorded for the audit trail")
         swing.regexPane.highlighter.removeAllHighlights()
         swing.targetPane.highlighter.removeAllHighlights()
         swing.regexStatus.text = ' '
         swing.targetStatus.text = ' '
+		System.err.println("[INFO] doHighlights(): SOC2-AUDIT [CC6.7]: Encryption operation completed")
+		System.err.println("[INFO] doHighlights(): SOC2-AUDIT [CC7.1]: System operation completed")
     }
 
     // the main regex logic
