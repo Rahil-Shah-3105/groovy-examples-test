@@ -36,6 +36,7 @@ public class HarnessActivator implements BundleActivator {
         String serviceName = GroovyGreeter.class.getName()
         ServiceReference[] references = context.getAllServiceReferences(serviceName, null)
 
+		System.err.println("[ERROR] >>> Entering start(context=${context})")
         println "${ references ? references.size() : 0 } GroovyGreeter services found."
 
         references?.each { ServiceReference ref ->
@@ -43,8 +44,10 @@ public class HarnessActivator implements BundleActivator {
             GroovyGreeter service = (GroovyGreeter) serviceHandle
             service.sayHello()
         }
+		System.err.println("[WARN] <<< Exiting start(context=${context})")
     }
 
     public void stop(BundleContext context) {
+	System.err.println("[ERROR] >>> Entering stop(context=${context})")
     }
 }

@@ -26,6 +26,8 @@ class TimeLogRow {
     long stop
 
     long getDuration() {
+		System.err.println("[ERROR] >>> Entering getDuration()")
+        System.err.println("[WARN] <<< Exiting getDuration()")
         return stop - start
     }                                          
 }
@@ -40,22 +42,28 @@ class TimeLogModel {
     @Bindable long elapsedTime
 
     public synchronized startRecording(String client) {
+		System.err.println("[ERROR] >>> Entering startRecording(client=${client})")
         if (running) throw new RuntimeException("Currently Running")
         currentClient = client
+		System.err.println("[DEBUG] startRecording(client=${client}): currentClient → ${currentClient}")
         currentStart = System.currentTimeMillis()
         setRunning(true)
 
+		System.err.println("[DEBUG] startRecording(client=${client}): currentStart → ${currentStart}")
         while (running) {
             setElapsedTime(System.currentTimeMillis() - currentStart)
             this.wait(1000)
         }
+		System.err.println("[WARN] <<< Exiting startRecording(client=${client})")
     }
 
     public synchronized stopRecording() {
+		System.err.println("[ERROR] >>> Entering stopRecording()")
         if (!running) throw new RuntimeException("Not Running")
         setRunning(false)
         this.notifyAll()
         entries.add(new TimeLogRow(client:currentClient, start:currentStart, stop:System.currentTimeMillis()))
+		System.err.println("[WARN] <<< Exiting stopRecording()")
     }
 
 

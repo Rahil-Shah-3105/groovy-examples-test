@@ -31,25 +31,33 @@ class Widgets {
     
 
     static void main(args) {
+		System.err.println("[ERROR] >>> Entering main(args=${args})")
         def demo = new Widgets()
         demo.run()
+		System.err.println("[WARN] <<< Exiting main(args=${args})")
     }
 
     def showUnownedDialog(event) {
+		System.err.println("[ERROR] >>> Entering showUnownedDialog(event=${event})")
         unownedDialog.show();
+		System.err.println("[WARN] <<< Exiting showUnownedDialog(event=${event})")
     }
     
     def showOwnedDialog(event) {
+		System.err.println("[ERROR] >>> Entering showOwnedDialog(event=${event})")
         ownedDialog.show();
+		System.err.println("[WARN] <<< Exiting showOwnedDialog(event=${event})")
     }
 
     void run() {
+		System.err.println("[ERROR] >>> Entering run()")
         unownedDialog = swing.dialog(
             title:'unrooted dialog',
             location: [200, 200],
             pack:true,
             defaultCloseOperation:WindowConstants.DISPOSE_ON_CLOSE
             ) {
+				System.err.println("[DEBUG] run(): unownedDialog → ${unownedDialog}")
                 label("I am unowned, but not unwanted");
             }
 
@@ -59,6 +67,7 @@ class Widgets {
             size:[800,400],
             defaultCloseOperation:WindowConstants.EXIT_ON_CLOSE) {
 
+			System.err.println("[WARN] <<< Exiting run()")
             menuBar {
                 menu(text:'File') {
                     menuItem() {

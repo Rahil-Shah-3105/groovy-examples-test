@@ -34,30 +34,37 @@ class TwitterAPI {
     def imageMap = [:]
 
     def withStatus(status, c) {
+		System.err.println("[ERROR] >>> Entering withStatus(status=${status},c=${c})")
         setStatus(status)
         try {
             def o = c()
             setStatus("\u00a0")
             return o
         } catch (Throwable t) {
+			System.err.println("[ERROR] Exception in withStatus(status=${status},c=${c}): ${t.getMessage()}")
             setStatus("Error $status : ${t.message =~ '400'?'Rate Limit Reached':t}")
+		System.err.println("[WARN] <<< Exiting withStatus(status=${status},c=${c})")
             throw t
         }
     }
 
 
     boolean login(def name, def password) {
+		System.err.println("[ERROR] >>> Entering login(name=${name},password=<redacted>)")
         withStatus("Logging in") {
             Authenticator.setDefault(
                 [getPasswordAuthentication : {
                     return new PasswordAuthentication(name, password) }
                 ] as Authenticator)
             authenticatedUser = getUser(name)
+			System.err.println("[DEBUG] login(name=${name},password=<redacted>): authenticatedUser → ${authenticatedUser}")
+		System.err.println("[WARN] <<< Exiting login(name=${name},password=<redacted>)")
             return true
         }
     }
 
     def getFriends() {
+		System.err.println("[ERROR] >>> Entering getFriends()")
         getFriends(authenticatedUser)
     }
 
@@ -66,7 +73,9 @@ class TwitterAPI {
     }
 
     def getFriends(user) {
+		System.err.println("[ERROR] >>> Entering getFriends(user=${user})")
         def friends = [user]
+		System.err.println("[WARN] <<< Exiting getFriends()")
         withStatus("Loading Friends") {
             def page = 1
             def list = slurper.parse(new URL("http://twitter.com/statuses/friends/${user.screen_name}.xml").openStream())
@@ -76,6 +85,7 @@ class TwitterAPI {
                 try {
                   list = slurper.parse("http://twitter.com/statuses/friends/${user.screen_name}.xml&page=$page")
                 } catch (Exception e) { break }
+				System.err.println("[ERROR] Exception in getFriends(user=${user})")
             }
         }
         withStatus("Loading Friends Images") {
@@ -83,18 +93,24 @@ class TwitterAPI {
                 loadImage(it.profile_image_url as String)
             }
         }
+		System.err.println("[WARN] <<< Exiting getFriends(user=${user})")
     }
 
     def getFriendsTimeline() {
+		System.err.println("[ERROR] >>> Entering getFriendsTimeline()")
         getFriendsTimeline(user)
+		System.err.println("[WARN] <<< Exiting getFriendsTimeline()")
     }
 
     def getFriendsTimeline(String friend) {
+		System.err.println("[ERROR] >>> Entering getFriendsTimeline(friend=${friend})")
         getFriendsTimeline(getUser(friend))
     }
 
     def getFriendsTimeline(user) {
+		System.err.println("[ERROR] >>> Entering getFriendsTimeline(user=${user})")
         def timeline = []
+		System.err.println("[WARN] <<< Exiting getFriendsTimeline(friend=${friend})")
         withStatus("Loading Timeline") {
             timeline =  slurper.parse(
                     new URL("http://twitter.com/statuses/friends_timeline/${user.screen_name}.xml").openStream()
@@ -105,9 +121,11 @@ class TwitterAPI {
                 loadImage(it.user.profile_image_url as String)
             }
         }
+		System.err.println("[WARN] <<< Exiting getFriendsTimeline(user=${user})")
     }
 
     def getTweets() {
+		System.err.println("[ERROR] >>> Entering getTweets()")
         return getTweets(user)
     }
 
@@ -116,6 +134,7 @@ class TwitterAPI {
     }
 
     def getTweets(friend) {
+		System.err.println("[ERROR] >>> Entering getTweets(friend=${friend})")
         def tweets = []
         withStatus("Loading Tweets") {
             tweets = slurper.parse(
@@ -127,9 +146,11 @@ class TwitterAPI {
                 loadImage(it.user.profile_image_url as String)
             }
         }
+		System.err.println("[WARN] <<< Exiting getTweets()")
     }
 
     def getUser(String screen_name) {
+		System.err.println("[ERROR] >>> Entering getUser(screen_name=${screen_name})")
         withStatus("Loading User $screen_name") {
             if (screen_name.contains('@')) {
                 return slurper.parse(
@@ -141,22 +162,28 @@ class TwitterAPI {
                     )
             }
         }
+		System.err.println("[WARN] <<< Exiting getUser(screen_name=${screen_name})")
     }
 
     def tweet(message) {
+		System.err.println("[ERROR] >>> Entering tweet(message=${message})")
         withStatus("Tweeting") {
             def urlConnection = new URL("http://twitter.com/statuses/update.xml").openConnection()
             urlConnection.doOutput = true
+			System.err.println("[DEBUG] tweet(message=${message}): urlConnection.doOutput → ${urlConnection.doOutput}")
             urlConnection.outputStream << "status=${URLEncoder.encode(message, 'UTF-8')}"
+		System.err.println("[WARN] <<< Exiting tweet(message=${message})")
             return slurper.parse(urlConnection.inputStream)
         }
     }
 
     // no need to read these, swing seems to cache these so the EDT won't stall
     def loadImage(image) {
+		System.err.println("[ERROR] >>> Entering loadImage(image=${image})")
         if (!imageMap[image]) {
             Thread.start {imageMap[image] = new javax.swing.ImageIcon(new URL(image))}
         }
+		System.err.println("[WARN] <<< Exiting loadImage(image=${image})")
     }
 
 }

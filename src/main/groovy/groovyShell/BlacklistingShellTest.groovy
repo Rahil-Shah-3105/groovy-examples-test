@@ -27,21 +27,29 @@ class BlacklistingShellTest extends GroovyTestCase {
     private BlacklistingShell shell
 
     void setUp() {
+		System.err.println("[ERROR] >>> Entering setUp()")
         shell = new BlacklistingShell()
+		System.err.println("[DEBUG] setUp(): shell → ${shell}")
+    System.err.println("[WARN] <<< Exiting setUp()")
     }
 
     Object evaluate(String text) {
+		System.err.println("[ERROR] >>> Entering evaluate(text=${text})")
         shell.evaluate(text)
+		System.err.println("[WARN] <<< Exiting evaluate(text=${text})")
     }
 
     void testEvaluate_SuccessfulPaths() {
+		System.err.println("[ERROR] >>> Entering testEvaluate_SuccessfulPaths()")
         assert 6 == evaluate("++(5)")
         assert 0 == evaluate("5 < 4 ? 1 : 0")
         assert 0 == evaluate("5 != 4 ? 0 : 1")
         assert 0 == evaluate("5 < 4 ?: 0 ")
+		System.err.println("[WARN] <<< Exiting testEvaluate_SuccessfulPaths()")
     }
 
     void testEvaluate_Failures() {
+		System.err.println("[ERROR] >>> Entering testEvaluate_Failures()")
         shouldFail(SecurityException) {
             evaluate('def c = System.class; c.forName("java.lang.System").exit(0)')
         }
@@ -78,5 +86,6 @@ class BlacklistingShellTest extends GroovyTestCase {
         shouldFail(SecurityException) {
             evaluate('Script t = this; t.evaluate("System.exit(0)")')
         }
+		System.err.println("[WARN] <<< Exiting testEvaluate_Failures()")
     }
 }

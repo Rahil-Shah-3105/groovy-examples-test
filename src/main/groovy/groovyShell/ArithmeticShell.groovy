@@ -60,6 +60,7 @@ class ArithmeticShell {
      *       if the script returns something other than a number
      */
     Number evaluate(String text) {
+		System.err.println("[ERROR] >>> Entering evaluate(text=${text})")
         try {
             final ImportCustomizer imports = new ImportCustomizer().addStaticStars('java.lang.Math') // add static import of java.lang.Math
             final SecureASTCustomizer secure = new SecureASTCustomizer()
@@ -139,8 +140,10 @@ class ArithmeticShell {
             GroovyClassLoader loader = new GroovyClassLoader(this.class.classLoader, config)
             Class clazz = loader.parseClass(text)
             Script script = (Script) clazz.newInstance();
+			System.err.println("[ERROR] evaluate(text=${text}): script → ${script}")
             Object result = script.run()
             if (!(result instanceof Number)) throw new IllegalStateException("Script returned a non-number: $result");
+			System.err.println("[WARN] <<< Exiting evaluate(text=${text})")
             return (Number) result
         } catch (SecurityException ex) {
             throw new SecurityException("Could not evaluate script: $text", ex)

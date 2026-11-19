@@ -33,6 +33,7 @@ public class MyTableModel extends AbstractTableModel {
     private static final Logger log = Logger.getLogger(MyTableModel.class.getName());
 
     public MyTableModel() {
+	log.severe(">>> Entering MyTableModel()");
     }
 
     final String[] columnNames = { "First Name", "Last Name", "Sport", "# of Years", "Vegetarian" };
@@ -48,18 +49,26 @@ public class MyTableModel extends AbstractTableModel {
     };
 
     public int getColumnCount() {
+		log.severe(">>> Entering getColumnCount()");
+		log.warning("<<< Exiting getColumnCount()");
         return columnNames.length;
     }
 
     public int getRowCount() {
+		log.severe(">>> Entering getRowCount()");
+		log.warning("<<< Exiting getRowCount()");
         return data.length;
     }
 
     public String getColumnName(int col) {
+		log.severe(">>> Entering getColumnName(col=" + col + ")");
+		log.warning("<<< Exiting getColumnName(col=" + col + ")");
         return columnNames[col];
     }
 
     public Object getValueAt(int row, int col) {
+		log.severe(">>> Entering getValueAt(row=" + row + ",col=" + col + ")");
+		log.warning("<<< Exiting getValueAt(row=" + row + ",col=" + col + ")");
         return data[row][col];
     }
 
@@ -70,7 +79,10 @@ public class MyTableModel extends AbstractTableModel {
      * rather than a check box.
      */
     public Class getColumnClass(int c) {
-        return getValueAt(0, c).getClass();
+		log.severe(">>> Entering getColumnClass(c=" + c + ")");
+        Class result = getValueAt(0, c).getClass();
+		log.warning("<<< Exiting getColumnClass(c=" + c + ")");
+        return result;
     }
 
     /*
@@ -78,12 +90,14 @@ public class MyTableModel extends AbstractTableModel {
      * editable.
      */
     public boolean isCellEditable(int row, int col) {
+		log.severe(">>> Entering isCellEditable(row=" + row + ",col=" + col + ")");
         //Note that the data/cell address is constant,
         //no matter where the cell appears onscreen.
         if (col < 2) {
             return false;
         }
         else {
+			log.warning("<<< Exiting isCellEditable(row=" + row + ",col=" + col + ")");
             return true;
         }
     }
@@ -93,6 +107,7 @@ public class MyTableModel extends AbstractTableModel {
      * data can change.
      */
     public void setValueAt(Object value, int row, int col) {
+		log.severe(">>> Entering setValueAt(value=" + value + ",row=" + row + ",col=" + col + ")");
         if (log.isLoggable(Level.FINE)) {
             log.fine(
                 "Setting value at " + row + "," + col + " to " + value + " (an instance of " + value.getClass() + ")");
@@ -118,6 +133,7 @@ public class MyTableModel extends AbstractTableModel {
             data[row][col] = value;
             fireTableCellUpdated(row, col);
         }
+		log.warning("<<< Exiting setValueAt(value=" + value + ",row=" + row + ",col=" + col + ")");
     }
 
 }

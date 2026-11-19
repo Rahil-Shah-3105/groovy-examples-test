@@ -27,14 +27,20 @@ class ArithmeticShellTest extends GroovyTestCase {
     private ArithmeticShell shell
 
     void setUp() {
+		System.err.println("[ERROR] >>> Entering setUp()")
         shell = new ArithmeticShell()
+		System.err.println("[DEBUG] setUp(): shell → ${shell}")
+    System.err.println("[WARN] <<< Exiting setUp()")
     }
 
     Number evaluate(String text) {
+		System.err.println("[ERROR] >>> Entering evaluate(text=${text})")
         shell.evaluate(text)
+		System.err.println("[WARN] <<< Exiting evaluate(text=${text})")
     }
 
     void testEvaluate_SuccessfulPaths() {
+		System.err.println("[ERROR] >>> Entering testEvaluate_SuccessfulPaths()")
         assert 2.9073548971824276E135 == evaluate("((6L / 2f) - 1) ** 4.5e2")
         assert -6.816387600233341 == evaluate("10 * Math.sin(15/-20)")
         assert 1.0 == evaluate("Math.cos(2*Math.PI)")
@@ -44,15 +50,19 @@ class ArithmeticShellTest extends GroovyTestCase {
         assert 0 == evaluate("5 < 4 ? 1 : 0")
         assert 0 == evaluate("5 != 4 ? 0 : 1")
         assert 0 == evaluate("5 < 4 ?: 0 ")
+		System.err.println("[WARN] <<< Exiting testEvaluate_SuccessfulPaths()")
     }
 
     void testEvaluate_StaticImportOfMath() {
+		System.err.println("[ERROR] >>> Entering testEvaluate_StaticImportOfMath()")
         assert 6.283185307179586 == evaluate("2*PI")
         assert 0.5403023058681398 == evaluate("cos(1)")
         assert 1.0 == evaluate("cos(2*PI)")
+		System.err.println("[WARN] <<< Exiting testEvaluate_StaticImportOfMath()")
     }
 
     void testEvaluate_Failures() {
+		System.err.println("[ERROR] >>> Entering testEvaluate_Failures()")
         shouldFail(SecurityException) {
             evaluate("Double.valueOf(\"5\")")
         }
@@ -104,5 +114,6 @@ class ArithmeticShellTest extends GroovyTestCase {
              // without expression whitelist set, no exception is thrown
              evaluate("new Object(); 1")
         }
+		System.err.println("[WARN] <<< Exiting testEvaluate_Failures()")
     }
 }

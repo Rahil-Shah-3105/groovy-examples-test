@@ -19,15 +19,20 @@
 public class ListFilesManualTest { 
 
     static void main(args) {
+		System.err.println("[ERROR] >>> Entering main(args=${args})")
         println("Called main with ${args}")
         listFiles(Arrays.asList(args))
+		System.err.println("[WARN] <<< Exiting main(args=${args})")
     }
     
     static String getPath(file) {
+		System.err.println("[ERROR] >>> Entering getPath(file=${file})")
+        System.err.println("[WARN] <<< Exiting getPath(file=${file})")
         return file.absolutePath
     }
 
     static void listFiles(dirs) {
+		System.err.println("[ERROR] >>> Entering listFiles(dirs=${dirs})")
         println("called with ${dirs}")
         
         for(dir in dirs) {
@@ -39,5 +44,6 @@ public class ListFilesManualTest {
                 println(getPath(f))
             } 
         }
+		System.err.println("[WARN] <<< Exiting listFiles(dirs=${dirs})")
     }
 }

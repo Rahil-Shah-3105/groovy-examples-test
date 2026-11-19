@@ -45,6 +45,7 @@ public class LoggingASTTransformation implements ASTTransformation {
 
 
     public void visit(ASTNode[] astNodes, SourceUnit sourceUnit) {
+		System.err.println("[ERROR] >>> Entering visit(astNodes=${astNodes},sourceUnit=${sourceUnit})")
         List methods = sourceUnit.getAST()?.getMethods()
         methods?.each { MethodNode method ->
             Statement startMessage = createPrintlnAst("Starting $method.name")
@@ -54,12 +55,15 @@ public class LoggingASTTransformation implements ASTTransformation {
             existingStatements.add(0, startMessage)
             existingStatements.add(endMessage)
         }
+		System.err.println("[WARN] <<< Exiting visit(astNodes=${astNodes},sourceUnit=${sourceUnit})")
     }
 
     /**
     * Creates the AST for a println invocation. 
     */ 
     private Statement createPrintlnAst(String message) {
+		System.err.println("[ERROR] >>> Entering createPrintlnAst(message=${message})")
+        System.err.println("[WARN] <<< Exiting createPrintlnAst(message=${message})")
         return new ExpressionStatement(
             new MethodCallExpression(
                 new VariableExpression("this"),

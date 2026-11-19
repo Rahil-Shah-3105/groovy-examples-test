@@ -59,6 +59,7 @@ class BlacklistingShell {
      *       if the script returns something other than a number
      */
     def evaluate(String text) {
+		System.err.println("[ERROR] >>> Entering evaluate(text=${text})")
         try {
             final SecureASTCustomizer secure = new SecureASTCustomizer()
             secure.with {
@@ -79,17 +80,23 @@ class BlacklistingShell {
             GroovyClassLoader loader = new GroovyClassLoader(this.class.classLoader, config)
             Class clazz = loader.parseClass(text)
             Script script = (Script) clazz.newInstance();
+			System.err.println("[ERROR] evaluate(text=${text}): script → ${script}")
             Object result = script.run()
             return result
         } catch (SecurityException ex) {
+			System.err.println("[ERROR] Exception in evaluate(text=${text}): ${ex.getMessage()}")
             throw new SecurityException("Could not evaluate script: $text", ex)
         } catch (MultipleCompilationErrorsException mce) {
+			System.err.println("[ERROR] Exception in evaluate(text=${text}): ${mce.getMessage()}")
             //this allows compilation errors to be seen by the user       
             mce.errorCollector.errors.each {
                 if (it instanceof ExceptionMessage && it.cause instanceof SecurityException) {
+					System.err.println("[ERROR] Throwing cause from evaluate(text=${text})")
                     throw it.cause
                 }
             }
+			System.err.println("[ERROR] Throwing mce from evaluate(text=${text})")
+		System.err.println("[WARN] <<< Exiting evaluate(text=${text})")
             throw mce
         }
     }            

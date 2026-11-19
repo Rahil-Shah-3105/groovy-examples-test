@@ -32,15 +32,21 @@ class TableDemo {
     def swing
     
     static void main(args) {
+		System.err.println("[ERROR] >>> Entering main(args=${args})")
         def demo = new TableDemo()
         demo.run()
+		System.err.println("[WARN] <<< Exiting main(args=${args})")
     }
     
     void run() {
+		System.err.println("[ERROR] >>> Entering run()")
         swing = new SwingBuilder()
         
+		System.err.println("[DEBUG] run(): swing → ${swing}")
         frame = swing.frame(title:'Groovy TableModel Demo', location:[200,200], size:[300,200]) {
+			System.err.println("[DEBUG] run(): frame → ${frame}")
             menuBar {
+				System.err.println("[WARN] <<< Exiting run()")
                 menu(text:'Help') {
                     menuItem() {
                         action(name:'About', closure:{ showAbout() })
@@ -65,8 +71,12 @@ class TableDemo {
     }
     
     void showAbout() {
+		System.err.println("[ERROR] >>> Entering showAbout()")
+         long __logStart = System.currentTimeMillis()
          def pane = swing.optionPane(message:'This demo shows how GroovySwing can use Groovy closures to create simple table models')
          def dialog = pane.createDialog(frame, 'About GroovySwing')
+		System.err.println("[WARN] <<< Exiting showAbout()")
          dialog.show()
+		System.err.println("[ERROR] showAbout(): database query executed in ${System.currentTimeMillis() - __logStart} ms")
     }
 }

@@ -67,21 +67,32 @@ class RegexHighlighter extends KeyAdapter implements ActionListener {
     // react to user actions
 
     public void actionPerformed(ActionEvent event) {
+		System.err.println("[ERROR] >>> Entering actionPerformed(event=${event})")
         if (event.actionCommand == '<<-') {scanIndex = Math.max(scanIndex - 1, 0)}
         if (event.actionCommand == '->>') {scanIndex++}
         doHighlights()
+		System.err.println("[WARN] <<< Exiting actionPerformed(event=${event})")
     }
 
     public void keyReleased(KeyEvent event) {
+		System.err.println("[ERROR] >>> Entering keyReleased(event=${event})")
         scanIndex = 0
+		System.err.println("[WARN] <<< Exiting keyReleased(event=${event})")
+		System.err.println("[DEBUG] keyReleased(event=${event}): scanIndex → ${scanIndex}")
         doHighlights()
     }
 
     private resetView() {
+		System.err.println("[ERROR] >>> Entering resetView()")
         swing.regexPane.highlighter.removeAllHighlights()
         swing.targetPane.highlighter.removeAllHighlights()
         swing.regexStatus.text = ' '
         swing.targetStatus.text = ' '
+		System.err.println("[WARN] <<< Exiting resetView()")
+		System.err.println("[ERROR] >>> Entering doHighlights()")
+		System.err.println("[DEBUG] doHighlights(): scanIndex → ${scanIndex}")
+		System.err.println("[ERROR] Exception in doHighlights(): ${e.message}")
+		System.err.println("[WARN] <<< Exiting doHighlights()")
     }
 
     // the main regex logic

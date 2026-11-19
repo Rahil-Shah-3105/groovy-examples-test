@@ -25,12 +25,16 @@ package transforms.local
 */ 
 
 def greet() {
+	System.err.println("[ERROR] >>> Entering greet()")
     println "Hello World"
+	System.err.println("[WARN] <<< Exiting greet()")
 }
     
 @WithLogging    //this should trigger extra logging
 def greetWithLogging() {
+	System.err.println("[ERROR] >>> Entering greetWithLogging()")
     println "Hello World"
+	System.err.println("[WARN] <<< Exiting greetWithLogging()")
 }
     
 // this prints out a simple Hello World

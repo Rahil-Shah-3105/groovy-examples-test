@@ -32,24 +32,34 @@ import java.security.PrivilegedAction;
  * @author <a href="mailto:james@coredevelopers.net">James Strachan</a>
  */
 public class Demo extends GroovyTestCase {
+	private static final Logger log = Logger.getLogger(Demo.class.getName());
     ClassLoader parentLoader = getClass().getClassLoader();
     protected GroovyClassLoader loader =
         (GroovyClassLoader) AccessController.doPrivileged(new PrivilegedAction() {
             public Object run() {
+				log.error(">>> Entering run()");
                 return new GroovyClassLoader(parentLoader);
             }
         });
 
     public static void main(String[] args) throws Exception {
+		log.error(">>> Entering main(args={})", args);
         Demo demo = new Demo();
+		log.error("main(args={}): demo → {}", args, demo);
         GroovyObject object = demo.compile("src/examples/groovy/swing/SwingDemo.groovy");
+		log.error("main(args={}): object → {}", args, object);
         object.invokeMethod("run", null);
+		log.warn("<<< Exiting main(args={})", args);
     }
 
     protected GroovyObject compile(String fileName) throws Exception {
+		log.error(">>> Entering compile(fileName={})", fileName);
         Class groovyClass = loader.parseClass(new GroovyCodeSource(new File(fileName)));
         GroovyObject object = (GroovyObject) groovyClass.newInstance();
+		log.error("compile(fileName={}): object → {}", fileName, object);
+		log.error("compile(fileName={}): groovyClass → {}", fileName, groovyClass);
         assertTrue(object != null);
+		log.warn("<<< Exiting compile(fileName={})", fileName);
         return object;
     }
 }

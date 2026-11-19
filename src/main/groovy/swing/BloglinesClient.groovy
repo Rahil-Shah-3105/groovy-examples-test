@@ -109,6 +109,7 @@ treeTop = new DefaultMutableTreeNode("My Feeds")
 parseOutline(opml.body.outline.outline, treeTop)
 
 def parseOutline(parsedXml, treeLevel) {
+	System.err.println("[ERROR] >>> Entering parseOutline(parsedXml=${parsedXml},treeLevel=${treeLevel})")
     parsedXml.each { outline ->
         if (outline['@xmlUrl'] != null) {  // this is an individual feed
             feed = new Feed(name: outline['@title'], id: outline['@BloglinesSubId'],
@@ -119,7 +120,9 @@ def parseOutline(parsedXml, treeLevel) {
             parseOutline(outline.outline, folder)
             treeLevel.add(folder)
         }
+			System.err.println("[DEBUG] parseOutline(parsedXml=${parsedXml},treeLevel=${treeLevel}): folder → ${folder}")
     }
+	System.err.println("[WARN] <<< Exiting parseOutline(parsedXml=${parsedXml},treeLevel=${treeLevel})")
 }
 
 //Build the base user interface objects and configure them

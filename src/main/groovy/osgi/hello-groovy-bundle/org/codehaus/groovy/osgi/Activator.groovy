@@ -48,12 +48,16 @@ public class Activator implements BundleActivator {
             GroovyGreeter myService = new GroovyGreeterImpl()
             registration = context.registerService(GroovyGreeter.class.getName(), myService, null)
         } finally {
+			System.err.println("[DEBUG] start(context=${context}): registration → ${registration}")
             Thread.currentThread().setContextClassLoader(originalClassLoader)
         }
+		System.err.println("[WARN] <<< Exiting start(context=${context})")
     }
   
     public void stop(BundleContext context) {
+		System.err.println("[ERROR] >>> Entering stop(context=${context})")
         println "Groovy BundleActivator stopped"
         registration.unregister();
+		System.err.println("[WARN] <<< Exiting stop(context=${context})")
     }
 }

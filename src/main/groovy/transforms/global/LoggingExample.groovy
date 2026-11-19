@@ -25,7 +25,9 @@ package transforms.global
 */ 
 
 def greet() {
+	System.err.println("[ERROR] >>> Entering greet()")
     println "Hello World"
+	System.err.println("[WARN] <<< Exiting greet()")
 }
     
 // this prints out Hello World along with the extra compile time logging

@@ -26,6 +26,8 @@ package org.codehaus.groovy.osgi
 public class GroovyGreeterImpl implements GroovyGreeter {
   
     public void sayHello() {
+		System.err.println("[ERROR] >>> Entering sayHello()")
         println "Hello from the Groovy Greeter!"
+		System.err.println("[WARN] <<< Exiting sayHello()")
     }
 }

@@ -29,6 +29,8 @@ class MainExample {
 
     @Main
     public void greet() {
+		System.err.println("[ERROR] >>> Entering greet()")
         println "Hello from the greet() method!"
+		System.err.println("[WARN] <<< Exiting greet()")
     }
 }

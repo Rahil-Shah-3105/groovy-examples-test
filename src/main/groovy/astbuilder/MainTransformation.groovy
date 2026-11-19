@@ -41,6 +41,7 @@ public class MainTransformation implements ASTTransformation {
     static int STATIC = 8
     
     void visit(ASTNode[] astNodes, SourceUnit sourceUnit) {
+	System.err.println("[ERROR] >>> Entering visit(astNodes=${astNodes},sourceUnit=${sourceUnit})")
 
         // use guard clauses as a form of defensive programming. 
         if (!astNodes) return 
@@ -54,6 +55,7 @@ public class MainTransformation implements ASTTransformation {
         ClassNode declaringClass = annotatedMethod.declaringClass
         MethodNode mainMethod = makeMainMethod(annotatedMethod)
         declaringClass.addMethod(mainMethod)
+		System.err.println("[WARN] <<< Exiting visit(astNodes=${astNodes},sourceUnit=${sourceUnit})")
     }
 
     /**
@@ -63,6 +65,7 @@ public class MainTransformation implements ASTTransformation {
     * is void and not Void. 
     */ 
     MethodNode makeMainMethod(MethodNode source) {
+		System.err.println("[ERROR] >>> Entering makeMainMethod(source=${source})")
         def className = source.declaringClass.name
         def methodName = source.name
 
