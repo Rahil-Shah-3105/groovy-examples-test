@@ -34,6 +34,7 @@ public class MyTableModel extends AbstractTableModel {
 
     public MyTableModel() {
 	log.severe(">>> Entering MyTableModel()");
+	log.warning("<<< Exiting MyTableModel()");
     }
 
     final String[] columnNames = { "First Name", "Last Name", "Sport", "# of Years", "Vegetarian" };

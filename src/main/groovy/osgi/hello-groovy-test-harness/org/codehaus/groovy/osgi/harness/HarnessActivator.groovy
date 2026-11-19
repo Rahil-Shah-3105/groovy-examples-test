@@ -49,5 +49,6 @@ public class HarnessActivator implements BundleActivator {
 
     public void stop(BundleContext context) {
 	System.err.println("[ERROR] >>> Entering stop(context=${context})")
+	System.err.println("[WARN] <<< Exiting stop(context=${context})")
     }
 }
